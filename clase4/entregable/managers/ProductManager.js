@@ -22,7 +22,7 @@ class ProductManager {
 
   // GET BY ID
   getProductById = async (id) => {
-    let error = {}
+    let error = {};
     try {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
@@ -31,7 +31,7 @@ class ProductManager {
         const foundProduct = products.find((product) => {
           return product.id == id;
         });
-        if (!foundProduct) return {error: "Error: 404 Not Found"};
+        if (!foundProduct) return { error: "Error: 404 Not Found" };
 
         return foundProduct;
       } else {
@@ -45,7 +45,7 @@ class ProductManager {
   // ADD
   addProduct = async (producto) => {
     const { title, description, price, thumbnail, code, stock } = producto;
-    const error = {}
+    const error = {};
     // Validacion de campos
     if (!title || !description || !price || !thumbnail || !code || !stock) {
       console.log(
@@ -61,7 +61,7 @@ class ProductManager {
         // CODE único
         const productCode = products.find((product) => product.code === code);
         if (productCode) {
-          error.error = `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
+          error.error = `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`;
           console.log(
             `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
           );
@@ -89,35 +89,36 @@ class ProductManager {
     const { title, description, price, thumbnail, code, stock } = producto;
     // Validacion de campos
 
-
-    if(!producto){
-      console.log("Error: No se puede actualizar con un producto vacío")
-      return 
+    if (!producto) {
+      console.log("Error: No se puede actualizar con un producto vacío");
+      return;
     }
-    
+
     try {
       const products = await this.getProducts();
-      const productFound = await this.getProductById(id)
-      if(productFound.error){
-        return productFound.error
+      const productFound = await this.getProductById(id);
+      if (productFound.error) {
+        return productFound.error;
       }
-   
+
       products.forEach((product) => {
-        if(product.id == id){
+        if (product.id == id) {
           Object.entries(producto).map(([key, value]) => {
-            if(key != 'id'){
-              product[key] = value
+            if (key != "id") {
+              product[key] = value;
+              productFound[key] = value;
             }
-          })
+          });
           
         }
-      }) 
+      });
 
       await fs.promises.writeFile(
         this.path,
         JSON.stringify(products, null, "\t")
       );
 
+      return productFound
     } catch (error) {
       console.log(error);
     }
@@ -145,9 +146,9 @@ class ProductManager {
         products.splice(index, index);
       }
 
-      await fs.promises.writeFile(this.path, JSON.stringify(products))
+      await fs.promises.writeFile(this.path, JSON.stringify(products));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 }
