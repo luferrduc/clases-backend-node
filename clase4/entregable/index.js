@@ -21,11 +21,12 @@ const env = async () => {
     // const createdProduct = await manager.addProduct(product)
     // console.log(createdProduct)
     
-    await manager.deleteProduct(2)
-    const firstProduct = await manager.getProductById(1)
+    // await manager.deleteProduct(2)
+    const firstProduct = await manager.getProductById(3)
     console.log(firstProduct)
     
-
+    const updatedProduct = await manager.updateProduct(1, product)
+    console.log(updatedProduct)
 }
 
 

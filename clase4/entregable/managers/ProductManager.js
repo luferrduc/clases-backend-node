@@ -22,6 +22,7 @@ class ProductManager {
 
   // GET BY ID
   getProductById = async (id) => {
+    let error = {}
     try {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
@@ -30,7 +31,7 @@ class ProductManager {
         const foundProduct = products.find((product) => {
           return product.id == id;
         });
-        if (!foundProduct) return "Error: 404 Not Found";
+        if (!foundProduct) return {error: "Error: 404 Not Found"};
 
         return foundProduct;
       } else {
@@ -44,6 +45,7 @@ class ProductManager {
   // ADD
   addProduct = async (producto) => {
     const { title, description, price, thumbnail, code, stock } = producto;
+    const error = {}
     // Validacion de campos
     if (!title || !description || !price || !thumbnail || !code || !stock) {
       console.log(
@@ -59,6 +61,7 @@ class ProductManager {
         // CODE único
         const productCode = products.find((product) => product.code === code);
         if (productCode) {
+          error.error = `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
           console.log(
             `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
           );
@@ -85,26 +88,36 @@ class ProductManager {
   updateProduct = async (id, producto) => {
     const { title, description, price, thumbnail, code, stock } = producto;
     // Validacion de campos
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
-      console.log(
-        "Error: El producto no fue ingresado, todos los campos son obligatorios"
-      );
-      return;
-    }
 
+
+    if(!producto){
+      console.log("Error: No se puede actualizar con un producto vacío")
+      return 
+    }
     
     try {
       const products = await this.getProducts();
-
-      if (!products.length) {
-        const productCode = products.map((product) => {});
-        if (productCode) {
-          console.log(
-            `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
-          );
-          return;
-        }
+      const productFound = await this.getProductById(id)
+      if(productFound.error){
+        return productFound.error
       }
+   
+      products.forEach((product) => {
+        if(product.id == id){
+          Object.entries(producto).map(([key, value]) => {
+            if(key != 'id'){
+              product[key] = value
+            }
+          })
+          
+        }
+      }) 
+
+      await fs.promises.writeFile(
+        this.path,
+        JSON.stringify(products, null, "\t")
+      );
+
     } catch (error) {
       console.log(error);
     }
