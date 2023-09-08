@@ -18,10 +18,10 @@ const env = async () => {
         stock: 250
     }
 
-    // const createdProduct = await manager.addProduct(product)
-    // console.log(createdProduct)
+    const createdProduct = await manager.addProduct(product)
+    console.log(createdProduct)
     
-    // await manager.deleteProduct(2)
+    await manager.deleteProduct(2)
     const firstProduct = await manager.getProductById(3)
     console.log(firstProduct)
     
@@ -32,25 +32,3 @@ const env = async () => {
 
 env()
 
-// const productManager = new ProductManager();
-// console.log(productManager.getProducts());
-// console.log(productManager.getProductById(1)); // -> 404 Not Found
-// productManager.addProduct();
-// productManager.addProduct(
-//   "producto prueba",
-//   "Este es un producto de prueba",
-//   200,
-//   "Sin imagen",
-//   "abc123",
-//   25
-// );
-// console.log(productManager.getProducts());
-// productManager.addProduct(
-//   "producto prueba",
-//   "Este es un producto de prueba",
-//   200,
-//   "Sin imagen",
-//   "abc123",
-//   25
-// );
-// console.log(productManager.getProductById(1));
