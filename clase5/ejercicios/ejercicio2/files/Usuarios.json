@@ -1,0 +1,11 @@
+[
+	{
+		"nombre": "Jorge",
+		"apellido": "Perez",
+		"usuario": "jperez",
+		"edad": 20,
+		"password": "c15a6cbfa56780b7aaa88c6f4c3e71d229844be7e82aab3302d2d15364b2c8d8",
+		"id": 1,
+		"salt": "2A7grSbdymW4KZkgA4tRzsraLRxTDaGZQnsAWZl0hSVldCL/6c7ootITy/RG91XvEnSDPrnw9ptllAnlpY7LR4inAOz/kGF1wHJPNKt3txj4/k5vHG5j/QDegJGwiXd1xfkuBMeDHEwvQMoHExV+TOy4+lnrxhkc6YqWIYESWNA="
+	}
+]
