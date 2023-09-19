@@ -11,13 +11,13 @@ export default class ProductManager {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
         const products = JSON.parse(data);
-        console.log("hola")
         return products;
       } else {
         return [];
       }
     } catch (error) {
       console.log(error);
+      return
     }
   };
 
