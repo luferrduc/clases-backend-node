@@ -1,34 +1,44 @@
 import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import ProductManager from "./managers/ProductManager.js";
+import { send } from "node:process";
 
-const manager = new ProductManager("./files/productos.json");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const filePath = path.join(__dirname, "./files/productos.json");
+
+const manager = new ProductManager(filePath);
 
 const app = express();
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+
 
 // RUTAS
 // app.get("/", async (req, res) => {});
 
 app.get("/products", async (req, res) => {
   const { limit } = req.query;
-  const products = await manager.getProducts()
-  console.log(products);
-  res.send(products);
+  const products = await manager.getProducts();
+  if(products.error) return res.send('Hubo un error en la lectura de la base')
+  if(!limit) return res.send(products)
+
+  const filteredProducts = products.slice(0, parseInt(limit))
+  res.send(filteredProducts);
 });
 
 app.get("/products/:pid", async (req, res) => {
-    const { pid } = req.params;
-    const product = await manager.getProductById(parseInt(pid))
-    
-    res.send(product);
-  });
+  const { pid } = req.params;
+  const product = await manager.getProductById(parseInt(pid));
 
+  res.send(product);
+});
 
 app.get("*", async (req, res) => {
-    res.status(404).send('404 - Route not found')
+  res.status(404).send(`<h1 style="font-size: 3rem">404 - Route not found</h1>`);
 });
 
 const PORT = 8080;

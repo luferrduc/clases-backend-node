@@ -1,7 +1,7 @@
 {
-  "name": "entregable6",
+  "name": "servidor-con-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "Servidor usando express, para el entregable de la clase 6",
   "main": "index.js",
   "type": "module",
   "scripts": {

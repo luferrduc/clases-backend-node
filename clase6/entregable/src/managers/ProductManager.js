@@ -17,7 +17,7 @@ export default class ProductManager {
       }
     } catch (error) {
       console.log(error);
-      return
+      return { error };
     }
   };
 
@@ -40,6 +40,7 @@ export default class ProductManager {
       }
     } catch (error) {
       console.log(error);
+      return { error };
     }
   };
 
@@ -52,7 +53,10 @@ export default class ProductManager {
       console.log(
         "Error: El producto no fue ingresado, todos los campos son obligatorios"
       );
-      return;
+      return {
+        error:
+          "Error: El producto no fue ingresado, todos los campos son obligatorios",
+      };
     }
 
     try {
@@ -66,7 +70,7 @@ export default class ProductManager {
           console.log(
             `Error: El código ${code} del producto ingresado ya se encuentra en otro producto.`
           );
-          return;
+          return { error };
         }
         producto.id = 1;
       } else {
@@ -82,6 +86,7 @@ export default class ProductManager {
       return producto;
     } catch (error) {
       console.log(error);
+      return { error };
     }
   };
 
@@ -110,7 +115,6 @@ export default class ProductManager {
               productFound[key] = value;
             }
           });
-          
         }
       });
 
@@ -119,7 +123,7 @@ export default class ProductManager {
         JSON.stringify(products, null, "\t")
       );
 
-      return productFound
+      return productFound;
     } catch (error) {
       console.log(error);
     }
@@ -150,7 +154,7 @@ export default class ProductManager {
       await fs.promises.writeFile(this.path, JSON.stringify(products));
     } catch (error) {
       console.log(error);
+      return { error };
     }
   };
 }
-
