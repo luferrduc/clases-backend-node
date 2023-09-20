@@ -33,7 +33,7 @@ app.get("/products", async (req, res) => {
 app.get("/products/:pid", async (req, res) => {
   const { pid } = req.params;
   const product = await manager.getProductById(parseInt(pid));
-  if(product.error) return res.send(`<h1>${product.error}</h1>`)
+  if(product.error) return res.send(`<h1> Product ${product.error}</h1>`)
 
   res.send(product);
 });
