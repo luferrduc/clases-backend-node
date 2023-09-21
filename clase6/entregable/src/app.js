@@ -27,7 +27,7 @@ app.get("/products", async (req, res) => {
   if(!limit) return res.send(products)
 
   const filteredProducts = products.slice(0, parseInt(limit))
-  res.send(filteredProducts);
+  return res.send(filteredProducts);
 });
 
 app.get("/products/:pid", async (req, res) => {
@@ -35,11 +35,11 @@ app.get("/products/:pid", async (req, res) => {
   const product = await manager.getProductById(parseInt(pid));
   if(product.error) return res.send(`<h1> Product ${product.error}</h1>`)
 
-  res.send(product);
+  return res.send(product);
 });
 
 app.get("*", async (req, res) => {
-  res.status(404).send(`<h1 style="font-size: 3rem">404 - Route not found</h1>`);
+  return res.status(404).send(`<h1 style="font-size: 3rem">404 - Route not found</h1>`);
 });
 
 const PORT = 8080;

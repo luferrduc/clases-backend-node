@@ -48,7 +48,7 @@ app.put("/users/:id", (req, res) => {
 
     user.id = userId
     users[userIndex] = user
-    res.send({status: 'success', message: "User updated"})
+    return res.send({status: 'success', message: "User updated"})
 
 });
 
@@ -58,7 +58,7 @@ app.delete('/users/:id', (req, res)=>{
     if(userIndex === -1) return res.status(404).send({status: "error", message: "User not found"})
 
     users.splice(userIndex, 1)
-    res.send({status: "success", message: "User deleted"})
+    return res.send({status: "success", message: "User deleted"})
 })
 
 const PORT = 8080;
