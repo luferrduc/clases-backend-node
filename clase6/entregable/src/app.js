@@ -18,13 +18,20 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // RUTAS
-// app.get("/", async (req, res) => {});
+app.get("/", async (req, res) => {
+  const products = await manager.getProducts();
+  if(products.error) return res.send('Hubo un error en la lectura de la base de datos')
+  return res.send(products);
+})
+
 
 app.get("/products", async (req, res) => {
   const { limit } = req.query;
   const products = await manager.getProducts();
-  if(products.error) return res.send('Hubo un error en la lectura de la base')
-  if(!limit) return res.send(products)
+  if(products.error) return res.send('Hubo un error en la lectura de la base de datos')
+  if(!limit ||  parseInt(limit) > products.length) return res.send(products)
+  if(parseInt(limit) < 0) return res.status(400).send({status: "error", message: "Limit must be a positve number"})
+
 
   const filteredProducts = products.slice(0, parseInt(limit))
   return res.send(filteredProducts);

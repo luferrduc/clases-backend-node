@@ -23,21 +23,14 @@ export default class ProductManager {
 
   // GET BY ID
   getProductById = async (id) => {
-    let error = {};
     try {
-      if (fs.existsSync(this.path)) {
-        const data = await fs.promises.readFile(this.path, "utf-8");
+      const products = await this.getProducts();
+      const productFound = products.find((product) => {
+        return product.id == id;
+      });
+      if (!productFound) return { error: "Error: 404 Not Found" };
 
-        const products = JSON.parse(data);
-        const foundProduct = products.find((product) => {
-          return product.id == id;
-        });
-        if (!foundProduct) return { error: "Error: 404 Not Found" };
-
-        return foundProduct;
-      } else {
-        return [];
-      }
+      return productFound;
     } catch (error) {
       console.log(error);
       return { error };
