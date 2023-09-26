@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: grid;
+            place-items: center;
+            place-content: center;
+            justify-content: center;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 15px
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de mascotas</h1>
+    <form action="/api/pets" method="post">
+        <label for="name">Nombre</label>
+        <input name="name" type="text">
+        <label for="species">Especie</label>
+        <input type="text">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
