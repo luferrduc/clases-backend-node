@@ -1,0 +1,10 @@
+{
+    "ext": "js,hbs",
+    "ignore": [
+      "node_modules/"
+    ],
+    "watch": [
+      "src/app.js",  
+      "src/views/"   
+    ]
+  }
