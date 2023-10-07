@@ -2,27 +2,40 @@ const socket = io();
 
 const container = document.getElementById("container");
 const form = document.getElementById("product-form");
-const deleteButton = document.getElementById("delete-product")
+const botones = document.querySelectorAll(".delete-button")
+
 
 form.addEventListener("submit", async (evt) => {
-  evt.preventDefault()
-  const data = Object.fromEntries( new FormData(evt.target))
+  evt.preventDefault();
+  const data = Object.fromEntries(new FormData(evt.target));
 
   try {
     let result = await fetch("/api/products", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json; charset=UTF-8"
-      }
-    })
-    console.log(result)
-    if(result.status === 400) return alert("Rellenar los campos")
-  
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    });
+    console.log(result);
+    if (result.status === 400) return alert("Rellenar los campos");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 });
+
+async function handleButtonClick(e){
+  const target = e.target
+  
+  const id = target.id
+  let result = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+  });
+}
+
+botones.forEach((boton) => {
+  boton.addEventListener("click", handleButtonClick)
+})
 
 socket.on("refreshProducts", (data) => {
   container.innerHTML = ``;
@@ -37,7 +50,7 @@ socket.on("refreshProducts", (data) => {
           <p style="margin: 0;">status: ${product.status}</p>
           <span style="margin: 0;">stock: ${product.stock}</span>
       </div>
-      <button id="delete-product" style="background-color: red; padding:5px 10px; border-radius:25px; cursor:pointer; font-weight:bold">Eliminar</button>
+      <button class="delete-button" id=${product.id} style="background-color: red; padding:5px 10px; border-radius:25px; cursor:pointer; font-weight:bold">Eliminar</button>
     </section>
     `;
   });
