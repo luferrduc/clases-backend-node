@@ -38,5 +38,15 @@
 		"stock": 15,
 		"status": true,
 		"id": 4
+	},
+	{
+		"title": "ASUS TUF GAMING F17",
+		"description": "Notebook Asus TUF Gaming F17, 16Gb RAM, 1TB SSD",
+		"price": 3600,
+		"thumbnail": [],
+		"code": "notebook-005",
+		"stock": 12,
+		"status": true,
+		"id": 5
 	}
 ]

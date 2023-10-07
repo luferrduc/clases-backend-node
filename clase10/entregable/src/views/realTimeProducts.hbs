@@ -1,5 +1,18 @@
-<div>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
     <h1>Productos en tiempo real</h1>
+    <form action="" style="display: flex; flex-direction: column; gap: 10px; width: 50%;">
+        <label for="">Titulo</label>
+        <input type="text" name="title" id="title">
+        <label for="">Descripción</label>
+        <input type="text" name="description" id="description">
+        <label for="">Código</label>
+        <input type="text" name="code" id="code">
+        <label for="">Categoría</label>
+        <input type="text" name="category" id="category">
+        <label for="">Precio</label>
+        <input type="number" name="price" id="price">
+        <button type="submit">Enviar</button>
+    </form>
     <div id="container" style="display: flex; gap: 10px; padding: 5rem">
         {{#each products}}
         <ul>
@@ -8,7 +21,7 @@
             <li>code: {{this.code}}</li>
             <li>price: {{this.price}}</li>
             <li>status: {{this.status}}</li>
-            <li>stock: {{prod.stock}}</li>
+            <li>stock: {{this.stock}}</li>
             <li>category: {{this.category}}</li>
             <li>id: {{this.id}}</li>
         </ul>
