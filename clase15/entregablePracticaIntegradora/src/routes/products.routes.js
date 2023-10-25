@@ -1,14 +1,16 @@
 import { Router } from "express";
-import ProductManager from "../managers/ProductManager.js";
+// import ProductManager from "../dao/fileManagers/product-file.manager.js";
+import ProductManager from "../dao/dbManagers/products.manager.js"
+
 import { productsFilePath } from "../utils.js";
 
 const router = Router();
-const manager = new ProductManager(productsFilePath);
+  // const manager = new ProductManager(productsFilePath);
 
 router
   .get("/", async (req, res) => {
     const { limit } = req.query;
-    const products = await manager.getProducts();
+    const products = await ProductManager.getProducts();
     if (products.status === "server error")
       return res.status(500).send({ status: "error", error: products.error });
     // Limit validations
@@ -26,7 +28,7 @@ router
 
   .get("/:pid", async (req, res) => {
     const { pid } = req.params;
-    const product = await manager.getProductById(parseInt(pid));
+    const product = await ProductManager.getProductById(parseInt(pid));
     if (product.status === "error")
       return res.send({ status: "error", error: product.error });
 
@@ -41,10 +43,10 @@ router
       return res
         .status(400)
         .send({ status: "error", error: "Incomplete values" });
-    const newProduct = await manager.addProduct(product);
+    const newProduct = await ProductManager.addProduct(product);
     if (newProduct.status === "error")
       return res.status(400).send({ status: "error", error: newProduct.error });
-    io.emit("refreshProducts", await manager.getProducts())
+    io.emit("refreshProducts", await ProductManager.getProducts())
     return res.send({ status: "success", payload: newProduct });
   })
   .put("/:pid", async (req, res) => {
@@ -56,7 +58,7 @@ router
       return res
         .status(400)
         .send({ status: "error", error: "Incomplete values" });
-    const updatedProduct = await manager.updateProduct(pid, product);
+    const updatedProduct = await ProductManager.updateProduct(pid, product);
     if (updatedProduct.status === "error")
       return res
         .status(400)
@@ -69,10 +71,10 @@ router
   .delete("/:pid", async (req, res) => {
     const pid = parseInt(req.params.pid);
     const io = req.app.get("socketio")
-    const deletedProduct = await manager.deleteProduct(pid)
+    const deletedProduct = await ProductManager.deleteProduct(pid)
     if(deletedProduct.status === "error") return res.status(400).send({ status: "error", error: deletedProduct.error })
 
-    io.emit("refreshProducts", await manager.getProducts())
+    io.emit("refreshProducts", await ProductManager.getProducts())
     return res.send({ status: "success", payload: deletedProduct});
   });
 

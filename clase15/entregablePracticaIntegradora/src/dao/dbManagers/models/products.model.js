@@ -2,8 +2,8 @@ import mongoose from "mongoose"
 
 const productsCollection = 'products'
 const productsSchema = new mongoose.Schema({
-    id: {
-        type: UUID,
+    _id: {
+        type: mongoose.Schema.Types.UUID,
         required: true,
         immutable: true
     },

@@ -5,7 +5,7 @@ const cartsCollection = "carts"
 
 const productsCartsSchema = new mongoose.Schema({
     id: {
-        type: UUID,
+        type: mongoose.Schema.Types.UUID,
         required: true,
         immutable: true
     },
