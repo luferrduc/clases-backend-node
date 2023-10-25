@@ -1,16 +1,18 @@
 import { Router } from "express";
 // import ProductManager from "../dao/fileManagers/product-file.manager.js";
-import ProductManager from "../dao/dbManagers/products.manager.js"
+import Products from "../dao/dbManagers/products.manager.js"
 
 import { productsFilePath } from "../utils.js";
 
 const router = Router();
   // const manager = new ProductManager(productsFilePath);
+const manager = new Products()
+
 
 router
   .get("/", async (req, res) => {
     const { limit } = req.query;
-    const products = await ProductManager.getProducts();
+    const products = await manager.getAll()
     if (products.status === "server error")
       return res.status(500).send({ status: "error", error: products.error });
     // Limit validations
