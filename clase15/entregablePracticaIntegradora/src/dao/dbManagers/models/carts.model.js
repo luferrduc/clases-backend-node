@@ -12,17 +12,11 @@ const productsCartsSchema = new mongoose.Schema({
     quantity: {
         type: Number,
         min: 1,
-        required:true,
         default: 1
     }
 })
 
 const cartsSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true,
-        immutable: true
-    },
     products: {
         type: [
             productsCartsSchema

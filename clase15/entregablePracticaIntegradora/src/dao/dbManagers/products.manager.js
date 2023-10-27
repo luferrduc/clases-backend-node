@@ -6,7 +6,7 @@ export default class Products {
         const products = await productsModel.find()
         return products
     }
-    getOneById = async(id) => {
+    getById = async(id) => {
         const product = await productsModel.findOne({_id: id})
         return product
     }
@@ -18,7 +18,8 @@ export default class Products {
 
     update = async(id, product) => {
         const result = await productsModel.updateOne({_id: id}, product)
-        return result
+        const newProduct = await productsModel.findById(id)
+        return newProduct
     }
 
     delete = async(id) => {
