@@ -15,7 +15,7 @@ router
       const { limit } = req.query;
       const products = await manager.getAll();
       if (!products)
-        return res.status(500).send({ status: "error", error: "Error en" });
+        return res.status(200).send({ status: "success", payload: [] });
       // Limit validations
       if (!limit || parseInt(limit) > products.length)
         return res.send({ status: "success", payload: products });
@@ -45,15 +45,16 @@ router
     }
   })
   .post("/", validateBody, async (req, res) => {
-    const product = req.body;
-    const io = req.app.get("socketio");
-    const { title, description, price, thumbnail, code, stock, status } =
-      product;
-    if (!title || !description || !price || !code || !stock)
-      return res
-        .status(400)
-        .send({ status: "error", error: "Incomplete values" });
+
     try {
+      const product = req.body;
+      const io = req.app.get("socketio");
+      const { title, description, price, thumbnail, code, stock, status } =
+        product;
+      if (!title || !description || !price || !code || !stock)
+        return res
+          .status(400)
+          .send({ status: "error", error: "Incomplete values" });
       const newProduct = await manager.create(product);
       io.emit("refreshProducts", await manager.getAll());
       return res.send({ status: "success", payload: newProduct });

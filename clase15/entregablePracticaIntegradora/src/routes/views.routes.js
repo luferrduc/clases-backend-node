@@ -20,6 +20,7 @@ router.get("/realtimeproducts", async (req, res)=>{
     const productsList = await productManager.getAll()
     res.render("realtimeproducts", {products: productsList})
 })
+// Vista para entregar los mensajes y la hoja de estilos
 router.get("/chat", async(req, res) => {
     const messagesList = await messageManager.getAll()
     res.render("chat", {messages: messagesList, style: "chat.css"})

@@ -5,13 +5,12 @@ const cartsCollection = "carts"
 
 const productsCartsSchema = new mongoose.Schema({
     id: {
-        type: mongoose.Schema.Types.UUID,
+        type: String,
         required: true,
         immutable: true
     },
     quantity: {
         type: Number,
-        min: 1,
         default: 1
     }
 })
@@ -21,6 +20,7 @@ const cartsSchema = new mongoose.Schema({
         type: [
             productsCartsSchema
         ],
+        required: false,
         default: []
     }
 })
