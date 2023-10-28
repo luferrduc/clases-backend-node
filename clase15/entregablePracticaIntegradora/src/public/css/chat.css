@@ -19,7 +19,7 @@ body {
 #message-logs {
     list-style-type: none;
     padding: 2px 4px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 #message-logs > li {

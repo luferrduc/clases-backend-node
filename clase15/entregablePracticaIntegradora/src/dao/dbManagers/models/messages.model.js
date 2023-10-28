@@ -6,7 +6,8 @@ const messagesSchema = new mongoose.Schema({
     user: {
         type: String,
         required: true,
-        immutable: true
+        immutable: true,
+        match: [/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/ , 'Please fill a valid email address']
     },
     message: {
         type: String,

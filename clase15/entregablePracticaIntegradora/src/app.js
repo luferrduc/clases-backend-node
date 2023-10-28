@@ -12,7 +12,7 @@ import mongoose from "mongoose";
 import MessageManager from "./dao/dbManagers/messages.manager.js"
 
 const app = express();
-const PORT = 8080;
+const PORT = 4001;
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
@@ -49,9 +49,14 @@ socketServer.on("connection", socket => {
   console.log("Cliente conectado")
 
   socket.on("message", async (data) => {
-    const result = await messagesManager.create(data)
-    const messages = await messagesManager.getAll()
-    socketServer.emit("messageLogs", messages)
+    try {
+      const result = await messagesManager.create(data)
+      const messages = await messagesManager.getAll()
+      socketServer.emit("messageLogs", messages)
+    } catch (error) {
+      console.error({error: error.message})
+    }
+  
   })
 
   socket.on("authenticated", async (data) => {

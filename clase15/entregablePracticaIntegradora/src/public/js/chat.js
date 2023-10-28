@@ -1,5 +1,6 @@
 // Con este socket vamos a establecer la comunicación con nuestro servidor
 const socket = io();
+const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/ 
 
 let user;
 
@@ -15,7 +16,7 @@ Swal.fire({
   input: "text",
   text: "Ingresa tu email para identificarte en el chat",
   inputValidator: (value) => {
-    return !value && "Necesitas ingresar un nombre de usuario";
+    return !value.match(emailRegex) && "Necesitas ingresar un email válido";
   },
   allowOutsideClick: false,
   allowEscapeKey: false,
