@@ -8,6 +8,9 @@ import cartsRouter from "./routes/carts.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import mongoose from "mongoose";
 
+// Manager de los mensajes
+import MessageManager from "./dao/dbManagers/messages.manager.js"
+
 const app = express();
 const PORT = 8080;
 
@@ -39,5 +42,23 @@ const server = app.listen(PORT, () => {
   console.log(`Server is ready on http://localhost:${PORT}`);
 });
 
-const io = new Server(server)
-app.set('socketio', io)
+const socketServer = new Server(server)
+
+socketServer.on("connection", socket => {
+  const messagesManager = new MessageManager()
+  console.log("Cliente conectado")
+
+  socket.on("message", async (data) => {
+    const result = await messagesManager.create(data)
+    const messages = await messagesManager.getAll()
+    socketServer.emit("messageLogs", messages)
+  })
+
+  socket.on("authenticated", async (data) => {
+    const messages = await messagesManager.getAll()
+    socket.emit("messageLogs", messages)
+    socket.broadcast.emit("newUserConnected", data)
+  })
+})
+
+app.set('socketio', socketServer)

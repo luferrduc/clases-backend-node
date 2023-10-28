@@ -38,6 +38,7 @@ botones.forEach((boton) => {
 })
 
 socket.on("refreshProducts", (data) => {
+  console.log(data)
   container.innerHTML = ``;
   data.forEach((product) => {
     container.innerHTML += `
