@@ -12,7 +12,7 @@ import mongoose from "mongoose";
 import MessageManager from "./dao/dbManagers/messages.manager.js"
 
 const app = express();
-const PORT = 4001;
+const PORT = 8080;
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
