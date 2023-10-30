@@ -20,11 +20,11 @@ export default class Carts {
 
   addProduct = async (cid, pid) => {
     const cart = await cartsModel.findById({ _id: cid });
-    console.log(cart);
+
 
     if (cart?.products?.length > 0) {
       const productIndex = cart.products?.findIndex((prod) => prod["_id"] == pid);
-      console.log("Product", productIndex);
+
       if (productIndex === -1) {
         cart.products?.push({ _id: pid, quantity: 1 });
       } else {
@@ -32,7 +32,7 @@ export default class Carts {
       }
     } else {
       cart.products?.push({ _id: pid, quantity: 1 });
-    //   console.log("cart", cart);
+  
     }
     const result = await cartsModel.updateOne({ _id: cid }, cart);
 

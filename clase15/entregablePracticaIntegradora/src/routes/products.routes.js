@@ -91,7 +91,7 @@ router
   .delete("/:pid", async (req, res) => {
     try {
       const { pid } = req.params;
-      console.log(pid)
+     
       const io = req.app.get("socketio");
       const deletedProduct = await manager.delete(pid);
       if (deletedProduct.deletedCount === 0)
