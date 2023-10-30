@@ -3,7 +3,7 @@ import { productsModel } from "./models/products.model.js";
 export default class Products {
 
     getAll = async() => {
-        const products = await productsModel.find()
+        const products = await productsModel.find().lean()
         return products
     }
     getById = async(id) => {

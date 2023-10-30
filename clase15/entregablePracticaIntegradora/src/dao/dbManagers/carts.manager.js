@@ -4,7 +4,7 @@ export default class Carts {
   constructor() {}
 
   getAll = async () => {
-    const carts = await cartsModel.find();
+    const carts = await cartsModel.find().lean();
     return carts;
   };
 
