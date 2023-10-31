@@ -1,0 +1,11 @@
+<div>
+  {{#each students}}
+    <p>Nombre: {{this.first_name}}</p>
+  {{/each}}
+  {{#if hasPrevPage}}
+  <a href="/students?page={{prevPage}}"><button>Atrás</button></a>
+  {{/if}}
+   {{#if hasNextPage}}
+  <a href="/students?page={{nextPage}}"><button>Siguiente</button></a>
+  {{/if}}
+</div>
