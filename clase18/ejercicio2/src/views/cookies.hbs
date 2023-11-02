@@ -1,0 +1,13 @@
+<div style="display: flex; flex-direction: column; gap: 40px">
+  <h1>Inyección de cookies</h1>
+  <form id="cookieForm" style="display: flex; flex-direction: column; gap: 10px; max-width: 400px;">
+    <label for="name">Nombre</label>
+    <input type="text" name="name" id="nameInput">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="emailInput">
+    <button type="submit" id="enviar-form">Enviar</button>
+  </form>
+  <button onclick="getCookie()" id="obtener-cookie" style="width: 200px;">Obtener Cookie</button>
+</div>
+
+<script src="/js/cookieSetter.js"></script>
