@@ -3,6 +3,10 @@
 		style="display: flex; flex-direction:column; justify-content:center; align-items:center"
 	>
 		<h3 style="font-size: 2.5rem;">Formulario ingreso productos</h3>
+		<a
+			href="/api/sessions/logout"
+			style="position: absolute; left: 10px; top: 10px"
+		><button>Salir</button></a>
 		<form
 			action="/api/products/"
 			id="product-form"
@@ -28,7 +32,7 @@
 	<h1 style="text-align: center;">Productos en tiempo real</h1>
 	<div
 		id="container"
-		style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) ; gap:20px; padding: 2rem 5rem;"
+		style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding: 2rem 5rem;"
 	>
 		{{#each products}}
 			<section style="padding: 1.5rem;" id={{this.id}}>

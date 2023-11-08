@@ -3,16 +3,28 @@ import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
+import sessionsRouter from "./routes/sessions.routes.js";
 import productsRouter from "./routes/products.routes.js";
 import cartsRouter from "./routes/carts.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import mongoose from "mongoose";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 // Manager de los mensajes
 import MessageManager from "./dao/dbManagers/messages.manager.js"
 
 const app = express();
 const PORT = 8080;
+
+
+// Database
+try {
+  await mongoose.connect("mongodb+srv://lucianoferrando94:RxBWSWiQeU9Ic0Xy@cluster55575.ixldvmd.mongodb.net/ecommerce?retryWrites=true&w=majority") 
+  console.log("Database connected")
+} catch (error) {
+  console.log(error.message)
+}
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
@@ -23,24 +35,28 @@ app.set("view engine", ".hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(
+	session({
+		store: MongoStore.create({
+			client: mongoose.connection.getClient(),
+			ttl: 3600
+		}),
+		secret: "Coder55575secret",
+		resave: true,
+		saveUninitialized: true
+	})
+);
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/api/sessions")
+app.use("/api/sessions", sessionsRouter)
 app.use("/", viewsRouter);
 
 app.use((req, res)=> {
   res.status(404).send({status:"error", message: "404 not found"})
 })
 
-// Database
-try {
-  await mongoose.connect("mongodb+srv://lucianoferrando94:RxBWSWiQeU9Ic0Xy@cluster55575.ixldvmd.mongodb.net/ecommerce?retryWrites=true&w=majority") 
-  console.log("Database connected")
-} catch (error) {
-  console.log(error.message)
-}
+
 // Server
 const server = app.listen(PORT, () => {
   console.log(`Server is ready on http://localhost:${PORT}`);
