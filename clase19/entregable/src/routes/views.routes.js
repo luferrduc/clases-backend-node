@@ -11,14 +11,21 @@ const productManager = new ProductManager();
 const cartsManager = new CartManaget();
 const messageManager = new MessagesManager();
 
-// Vista para mostrar productos sin WebSockets
-// router.get("/", async (req, res) => {
-// 	const productsList = await productManager.getAll();
-// 	res.render("home", { products: productsList });
-// });
+// Middlewares
+
+const publicAccess = (req, res, next)  => {
+  if(req.session?.user) return res.redirect('/')
+  next()
+}
+
+const privateAccess = (req, res, next)  => {
+  if(!req.session?.user) return res.redirect('/login')
+  next()
+}
+
 
 // Vista para mostrar productos en tiempo real con WebSockets
-router.get("/realtimeproducts", async (req, res) => {
+router.get("/realtimeproducts", privateAccess, async (req, res) => {
 	try {
 		const { limit = 10, page = 1, sort, query = {} } = req.query;
 		const options = {
@@ -49,7 +56,7 @@ router.get("/realtimeproducts", async (req, res) => {
 		return res.status(500).send(`<h2>Error 500: ${error.message}</h2>`);
 	}
 });
-router.get("/products", async (req, res) => {
+router.get("/products", privateAccess, async (req, res) => {
 	try {
 		const { limit = 10, page=1, sort, query: queryP, queryValue } = req.query;
 		const options = {
@@ -95,7 +102,7 @@ router.get("/products", async (req, res) => {
 		return res.status(500).send(`<h2>Error 500: ${error.message} </h2>`);
 	}
 });
-router.get("/products/:pid", async (req, res) => {
+router.get("/products/:pid", privateAccess, async (req, res) => {
 	try {
 		const { pid } = req.params;
 		const product = await productManager.getById(pid);
@@ -111,7 +118,7 @@ router.get("/products/:pid", async (req, res) => {
 		return res.status(500).send(`<h2>Error 500: ${error.message} </h2>`);
 	}
 });
-router.get("/carts/:cid", async (req, res) => {
+router.get("/carts/:cid", privateAccess, async (req, res) => {
 	try {
 		const cid = req.params.cid;
 		const cart = await cartsManager.getById(cid);
@@ -129,9 +136,21 @@ router.get("/carts/:cid", async (req, res) => {
 	}
 });
 // Vista para entregar los mensajes y la hoja de estilos
-router.get("/chat", async (req, res) => {
+router.get("/chat", privateAccess, async (req, res) => {
 	const messagesList = await messageManager.getAll();
 	res.render("chat", { messages: messagesList, style: "chat.css" });
 });
 
+router.get('/register', publicAccess ,(req, res) => {
+  res.render('register')
+})
+router.get("/login", publicAccess, (req, res) => {
+  res.render('login')
+
+})
+router.get('/', privateAccess, (req, res) => {
+  res.render('profile', {
+    user: req.session.user
+  })
+})
 export default router;
