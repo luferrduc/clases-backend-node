@@ -4,13 +4,13 @@ export default class Products {
 	getAll = async ({ limit, page, sort, query }) => {
 		const key = Object.keys(query)[0];
 		const value = Object.values(query)[0];
-		if (key.toLowerCase() === "stock") {
+		if (key?.toLowerCase() === "stock") {
 			query = {
-				[key.toLowerCase()]: { $gte: value }
+				[key?.toLowerCase()]: { $gte: value }
 			};
-		} else if (key.toLowerCase() === "category") {
+		} else if (key?.toLowerCase() === "category") {
 			query = {
-				[key.toLowerCase()]: { $regex: value, $options: "i" }
+				[key?.toLowerCase()]: { $regex: value, $options: "i" }
 			};
 		}else{
              query = {}

@@ -13,16 +13,15 @@ const messageManager = new MessagesManager();
 
 // Middlewares
 
-const publicAccess = (req, res, next)  => {
-  if(req.session?.user) return res.redirect('/')
-  next()
-}
+const publicAccess = (req, res, next) => {
+	if (req.session?.user) return res.redirect("/products");
+	next();
+};
 
-const privateAccess = (req, res, next)  => {
-  if(!req.session?.user) return res.redirect('/login')
-  next()
-}
-
+const privateAccess = (req, res, next) => {
+	if (!req.session?.user) return res.redirect("/login");
+	next();
+};
 
 // Vista para mostrar productos en tiempo real con WebSockets
 router.get("/realtimeproducts", privateAccess, async (req, res) => {
@@ -58,12 +57,12 @@ router.get("/realtimeproducts", privateAccess, async (req, res) => {
 });
 router.get("/products", privateAccess, async (req, res) => {
 	try {
-		const { limit = 10, page=1, sort, query: queryP, queryValue } = req.query;
+		const { limit = 10, page = 1, sort, query: queryP, queryValue } = req.query;
 		const options = {
 			limit,
 			page,
 			query: {}
-		}
+		};
 
 		let sortLink = "";
 		if (sort?.toLowerCase() === "asc") {
@@ -73,13 +72,20 @@ router.get("/products", privateAccess, async (req, res) => {
 			options.sort = { price: -1 };
 			sortLink = `&sort=${sort}`;
 		}
-		let queryLink = ""
-		if(queryP && queryValue){
-			options.query[queryP] = queryValue
-			queryLink = `&query=${queryP}&queryValue=${queryValue}`
+		let queryLink = "";
+		if (queryP && queryValue) {
+			options.query[queryP] = queryValue;
+			queryLink = `&query=${queryP}&queryValue=${queryValue}`;
 		}
 
-		const {docs: productsList, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages} = await productManager.getAll(options);
+		const {
+			docs: productsList,
+			hasPrevPage,
+			hasNextPage,
+			nextPage,
+			prevPage,
+			totalPages
+		} = await productManager.getAll(options);
 		const prevLink = hasPrevPage
 			? `/products?limit=${limit}&page=${prevPage}${sortLink}${queryLink}`
 			: null;
@@ -87,6 +93,7 @@ router.get("/products", privateAccess, async (req, res) => {
 			? `/products?limit=${limit}&page=${nextPage}${sortLink}${queryLink}`
 			: null;
 		res.render("products", {
+			user: req.session.user,
 			products: productsList,
 			totalPages,
 			prevPage,
@@ -126,7 +133,7 @@ router.get("/carts/:cid", privateAccess, async (req, res) => {
 			return res
 				.status(400)
 				.render(`<h2>Error 404: Cart with id ${cid} not found </h2>`);
-		const products = cart.products
+		const products = cart.products;
 		return res.render("cart", {
 			products,
 			style: "cart.css"
@@ -141,16 +148,18 @@ router.get("/chat", privateAccess, async (req, res) => {
 	res.render("chat", { messages: messagesList, style: "chat.css" });
 });
 
-router.get('/register', publicAccess ,(req, res) => {
-  res.render('register')
-})
-router.get("/login", publicAccess, (req, res) => {
-  res.render('login')
+router.get("/register", publicAccess, (req, res) => {
+	res.render("register", { style: "register.css" });
+});
 
-})
-router.get('/', privateAccess, (req, res) => {
-  res.render('profile', {
-    user: req.session.user
-  })
-})
+router.get("/login", publicAccess, (req, res) => {
+	res.render("login", { style: "login.css" });
+});
+
+router.get("/", privateAccess, (req, res) => {
+	res.render("profile", {
+		user: req.session.user,
+		style: "profile.css"
+	});
+});
 export default router;
