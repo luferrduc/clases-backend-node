@@ -37,7 +37,7 @@ router
 
       return res.send({ status: "success", payload: products, totalPages, prevPage, nextPage, page, hasPrevPage, hasNextPage, prevLink, nextLink });
     } catch (error) {
-      return res.status(500).send({ status: "error", error: error.message });
+      return res.status(500).send({ status: "error", message: error.message });
     }
   })
 
@@ -46,11 +46,11 @@ router
       const { pid } = req.params;
       const product = await manager.getById(pid);
       if (!product)
-        return res.status(404).send({ status: "error", error: "Product not found" });
+        return res.status(404).send({ status: "error", message: "Product not found" });
 
       return res.send({ status: "success", payload: product });
     } catch (error) {
-      return res.status(500).send({ status: "error", error: error.message });
+      return res.status(500).send({ status: "error", message: error.message });
     }
   })
   .post("/", async (req, res) => {
@@ -67,13 +67,13 @@ router
       if (!title || !description || !price || !code || !stock || !category)
         return res
           .status(400)
-          .send({ status: "error", error: "Incomplete values" });
+          .send({ status: "error", message: "Incomplete values" });
       const newProduct = await manager.create(product);
       const {docs: productsEmit} = await manager.getAll(options)
       io.emit("refreshProducts", productsEmit);
       return res.send({ status: "success", payload: newProduct });
     } catch (error) {
-      return res.status(500).send({ status: "error", error: error.message });
+      return res.status(500).send({ status: "error", message: error.message });
     }
   })
   .put("/:pid", async (req, res) => {
@@ -99,7 +99,7 @@ router
         payload:  updatedProduct,
       });
     } catch (error) {
-      return res.status(500).send({ status: "error", error: error.message });
+      return res.status(500).send({ status: "error", message: error.message });
     }
   })
   .delete("/:pid", async (req, res) => {
@@ -115,13 +115,13 @@ router
       if (deletedProduct.deletedCount === 0)
         return res
           .status(400)
-          .send({ status: "error", error: "Product not found, incorrect id" });
+          .send({ status: "error", message: "Product not found, incorrect id" });
   
       const {docs: productsEmit} = await manager.getAll(options)
       io.emit("refreshProducts", productsEmit);
       return res.send({ status: "success", payload: "Product deleted succesfully" });
     } catch (error) {
-      return res.status(500).send({ status: "error", error: error.message });
+      return res.status(500).send({ status: "error", message: error.message });
       
     }
    

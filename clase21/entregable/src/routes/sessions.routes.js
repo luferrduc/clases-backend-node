@@ -28,7 +28,7 @@ router
 					.send({ status: "error", message: "invalid credentials" });
 
 			req.session.user = {
-				name: `${req.user.first_name} ${req.user?.last_name && ""}`,
+				name: `${req.user.first_name} ${req.user?.last_name ? req.user?.last_name : ""}`,
 				email: req.user.email,
 				age: req.user.age,
 				role: req.user.role
