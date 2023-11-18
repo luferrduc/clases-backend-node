@@ -33,6 +33,7 @@ router
 				age: req.user.age,
 				role: req.user.role
 			};
+			console.log("HOLA")
 			return res.send({ status: "success", message: "login success" });
 		}
 	)
@@ -52,6 +53,8 @@ router
 		"/github",
 		passport.authenticate("github", { scope: ["user:email"] }),
 		async (req, res) => {
+	
+
 			res.send({ status: "success", message: "user registered" });
 		}
 	)
@@ -59,8 +62,13 @@ router
 		"/github-callback",
 		passport.authenticate("github", { failureRedirect: "/login" }),
 		async (req, res) => {
-			req.session.user = req.user;
-			return res.redirect("/");
+			req.session.user = {
+				name: `${req.user.first_name} ${req.user?.last_name ? req.user?.last_name : ""}`,
+				email: req.user.email,
+				age: req.user.age,
+				role: req.user.role
+			};
+			return res.redirect("/products");
 		}
 	);
 

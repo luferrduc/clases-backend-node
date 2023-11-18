@@ -22,7 +22,7 @@ export const initializePassport = () => {
 				try {
 					const email = profile.emails[0].value;
 					const user = await usersModel.findOne({ email });
-
+					
 					if (!user) {
 						// Crear la cuenta o usuario desde 0
 						const newUser = {
@@ -88,7 +88,6 @@ export const initializePassport = () => {
 			},
 			async (username, password, done) => {
 				try {
-					console.log({ username });
 					if (
 						username.trim() === "adminCoder@coder.com" &&
 						password === "adminCod3r123"
