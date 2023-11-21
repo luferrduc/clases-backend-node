@@ -11,7 +11,7 @@ export default class Users {
 	};
 
 	create = async ({ first_name, last_name, email, age, password }) => {
-		const result = usersModel.create({
+		const result = await usersModel.create({
 			first_name,
 			last_name,
 			email,

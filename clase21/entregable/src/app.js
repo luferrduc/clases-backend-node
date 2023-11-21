@@ -26,6 +26,7 @@ try {
   console.log("Database connected")
 } catch (error) {
   console.log(error.message)
+  mongoose.disconnect()
 }
 
 // Engine Config
