@@ -2,7 +2,7 @@
 import Router from "./router.js";
 // import ProductManager from "../dao/fileManagers/product-file.manager.js";
 import Products from "../dao/dbManagers/products.manager.js";
-
+import { validateProduct } from "../schemas/products.schema.js"; 
 import { productsFilePath } from "../utils.js";
 import { accessRolesEnum, passportStrategiesEnum } from "../config/enums.js";
 
@@ -123,21 +123,22 @@ export default class ProductsRouter extends Router {
 			query: {}
 		};
 		try {
-			const product = req.body;
+			const result = validateProduct(req.body);
 			const io = req.app.get("socketio");
-			const {
-				title,
-				description,
-				price,
-				thumbnail,
-				code,
-				category,
-				stock,
-				status
-			} = product;
-			if (!title || !description || !price || !code || !stock || !category)
-				return res.sendClientError("Incomplete values");
-			const newProduct = await this.productsManager.create(product);
+			// const {
+			// 	title,
+			// 	description,
+			// 	price,
+			// 	thumbnail,
+			// 	code,
+			// 	category,
+			// 	stock,
+			// 	status
+			// } = product;
+			// if (!title || !description || !price || !code || !stock || !category)
+			if(result.error)
+				return res.sendClientError(result.error);
+			const newProduct = await this.productsManager.create(result.data);
 			const { docs: productsEmit } = await this.productsManager.getAll(options);
 			io.emit("refreshProducts", productsEmit);
 			return res.sendSuccess(newProduct);

@@ -55,7 +55,7 @@ export default class Router {
 			return res.status(200).json({ status: "success", payload: data });
 		};
 		res.sendSuccessNewResource = (data) => {
-			return res.status(201).json({ status: "success", payload: data });
+			return res.status(201).json({ status: "success", ...data });
 		};
 		res.sendClientError = (error) => {
 			return res.status(400).json({ status: "error", message: error });
@@ -81,7 +81,7 @@ export default class Router {
 	applyCustomPassportCall = (strategy) => (req, res, next) => {
 		if (strategy === passportStrategiesEnum.JWT) {
 			// custom passport call
-			passport.authenticate(strategy, function (err, user, info) {
+			passport.authenticate(strategy,{ session: false }, function (err, user, info) {
 				if (err) return next(err);
 				if (!user)
 					return res
@@ -91,6 +91,7 @@ export default class Router {
 							messages: info.messages ? info.messages : info.toString()
 						});
 				req.user = user;
+				
 				next();
 			})(req, res, next);
 		} else {
@@ -100,9 +101,8 @@ export default class Router {
 
 	handlePolicies = (policies) => (req, res, next) => {
 		if (policies[0] === accessRolesEnum.PUBLIC) return next();
-
 		const user = req.user;
-		if (!policies.includes(user.role.toUpperCase()))
+		if (!policies.includes(user?.role.toLowerCase()))
 			return res
 				.status(403)
 				.json({ status: "error", message: "not permissions" });

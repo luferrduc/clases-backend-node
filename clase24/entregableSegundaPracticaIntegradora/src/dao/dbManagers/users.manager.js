@@ -10,6 +10,11 @@ export default class Users {
 		return exists;
 	};
 
+	getByEmail = async (email) => {
+		const exists = await usersModel.findOne({email}).lean();
+		return exists;
+	}
+	
 	create = async ({ first_name, last_name, email, age, password }) => {
 		const result = await usersModel.create({
 			first_name,

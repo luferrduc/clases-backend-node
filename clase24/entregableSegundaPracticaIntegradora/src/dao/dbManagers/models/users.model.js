@@ -24,15 +24,13 @@ const usersSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	carts: {
-		type: [
-			{
-				cart: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "carts"
-				}
+	cart: {
+		type: {
+			cart: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "carts"
 			}
-		]
+		}
 	},
 	role: {
 		type: String,
@@ -41,7 +39,7 @@ const usersSchema = new mongoose.Schema({
 });
 
 usersSchema.pre(["find", "findById", "findOne"], function () {
-	this.populate("carts.cart");
+	this.populate("cart.cart");
 });
 
 const usersModel = mongoose.model(userCollection, usersSchema);

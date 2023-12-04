@@ -14,11 +14,15 @@ registerForm.addEventListener('submit', (e) => {
       "Content-Type": "application/json"
     }
   }).then(result => {
+    console.log(result)
     if(result.status === 201){
       window.location.replace("/")
     }
     if(result.status === 400){
       alert("Usuario ya está registrado")
+    }
+    if(result.status === 422){
+      console.log("ASdasd")
     }
   })
 

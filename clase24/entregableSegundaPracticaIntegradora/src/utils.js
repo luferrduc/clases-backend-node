@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import { PRIVATE_KEY_JWT } from "./config/constants.js";
 
 const __filename = fileURLToPath(import.meta.url)
 export const __dirname = dirname(__filename)
@@ -22,7 +23,8 @@ export const isValidPassowrd = (plainPassword, hashedPassword) => {
 }
 
 export const generateToken = (user) => {
-	const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h'});
+  // console.log({userToken: user})
+	const token = jwt.sign( {user} , PRIVATE_KEY_JWT, { expiresIn: '24h'});
   return token
 };
 

@@ -10,6 +10,7 @@ import ViewsRouter from "./routes/views.routes.js";
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 
 // Manager de los mensajes
 import MessageManager from "./dao/dbManagers/messages.manager.js"
@@ -40,9 +41,11 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", ".hbs");
 
 // Middlewares
+app.disable('X-Powered-By')
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 app.use(
 	session({
 		store: MongoStore.create({

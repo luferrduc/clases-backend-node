@@ -22,6 +22,7 @@ export const initializePassport = () => {
     secretOrKey: PRIVATE_KEY_JWT
   }, async(jwt_payload, done) => {
     try {
+		
       return done(null, jwt_payload.user)
     } catch (error) {
       return done(error)
@@ -61,6 +62,75 @@ export const initializePassport = () => {
 					}
 				} catch (error) {
 					console.log(error);
+					return done("Incorrect credentials");
+				}
+			}
+		)
+	);
+	// Implementación del mecanismo de autenticacion con password y contraseña de forma local
+	passport.use(
+		"local-register",
+		new LocalStrategy(
+			{
+				passReqToCallback: true, // Permite acceder al objeto req como cualquier otro middleware
+				usernameField: "email"
+			},
+			async (req, username, password, done) => {
+				try {
+					const { first_name, last_name, age } = req.body;
+
+					const user = await usersModel.findOne({ email: username });
+					if (user) {
+						return done(null, false);
+					}
+					const hashedPassword = createHash(password);
+					const userToSave = {
+						first_name,
+						last_name,
+						email: username,
+						age,
+						password: hashedPassword,
+						role: "user"
+					};
+					const result = await usersModel.create(userToSave);
+					return done(null, result); // --> req.user = {first_name, last_name ...}
+				} catch (error) {
+					return done("Incorrect credentials");
+				}
+			}
+		)
+	);
+
+	// Implementación de nuestro login local
+	passport.use(
+		"local-login",
+		new LocalStrategy(
+			{
+				usernameField: "email"
+			},
+			async (username, password, done) => {
+				try {
+					if (
+						username.trim() === "adminCoder@coder.com" &&
+						password === "adminCod3r123"
+					) {
+						const user = {
+              _id: 1,
+							first_name: `Admin`,
+							last_name: "Coder",
+							email: username,
+							role: "admin"
+						};
+						return done(null, user);
+					}
+					const user = await usersModel.findOne({ email: username });
+					const validPassword = isValidPassowrd(password, user.password);
+
+					if (!user || !validPassword) {
+						return done(null, false);
+					}
+					return done(null, user);
+				} catch (error) {
 					return done("Incorrect credentials");
 				}
 			}
