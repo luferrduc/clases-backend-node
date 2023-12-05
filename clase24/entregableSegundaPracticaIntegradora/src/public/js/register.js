@@ -16,13 +16,13 @@ registerForm.addEventListener('submit', (e) => {
   }).then(result => {
     console.log(result)
     if(result.status === 201){
-      window.location.replace("/")
+      window.location.replace("/login")
     }
     if(result.status === 400){
       alert("Usuario ya está registrado")
     }
     if(result.status === 422){
-      console.log("ASdasd")
+      console.log("Error en los campos")
     }
   })
 

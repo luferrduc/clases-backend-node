@@ -198,7 +198,7 @@ export default class ViewsRouter extends Router {
 
 	async chat(req, res) {
 		const messagesList = await this.messagesManager.getAll();
-		res.render("chat", { messages: messagesList, style: "chat.css" });
+		return res.render("chat", { messages: messagesList, style: "chat.css" });
 	}
 	
 	async login(req, res) {

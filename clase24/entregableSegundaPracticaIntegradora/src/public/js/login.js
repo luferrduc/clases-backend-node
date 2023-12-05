@@ -17,7 +17,7 @@ loginForm.addEventListener('submit', (e) => {
     if(result.status === 200){
       window.location.replace("/products")
     }
-    if(result.status === 401){
+    if(result.status === 401 || result.status === 400){
       alert("Credenciales incorrectas")
     }
     if(result.status === 500){
