@@ -22,7 +22,7 @@ registerForm.addEventListener('submit', (e) => {
       alert("Usuario ya está registrado")
     }
     if(result.status === 422){
-      console.log("Error en los campos")
+      alert("Error en los campos")
     }
   })
 

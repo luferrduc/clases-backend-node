@@ -18,7 +18,7 @@ const userSchema = z.object({
     required_error: "age is required"
   }).min(1, {message: "age must be greater or equal to 1"}).or(z.string()),
   password: z.string().trim().min(6, { message: "password must be 6 or more characteres long"}),
-  cart: z.object().nullish(),
+  cart: z.string().uuid().nullish(),
   role: z.enum(["user", "admin"]).default("user")
 
 })

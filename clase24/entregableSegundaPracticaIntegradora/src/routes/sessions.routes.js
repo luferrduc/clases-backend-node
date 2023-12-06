@@ -69,6 +69,7 @@ export default class SessionsRouter extends Router {
 				return res.sendSuccess(accessToken);
 			}
 			const user = await this.usersManager.getByEmail(email);
+			
 			if (!user) return res.sendClientError("incorrect credentials");
 
 			const comparePassword = isValidPassowrd(password, user.password);
@@ -84,6 +85,7 @@ export default class SessionsRouter extends Router {
 			});
 			return res.sendSuccess(accessToken);
 		} catch (error) {
+			console.log(error.message)
 			return res.sendServerError(error.message);
 		}
 	}
@@ -109,6 +111,7 @@ export default class SessionsRouter extends Router {
 	}
 
 	async logout(req, res) {
+		this.usersManager.deleteCartFromUser(req.user.email)
 		return res.clearCookie("coderCookieToken").redirect("/login");
 	}
 
