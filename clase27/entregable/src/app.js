@@ -25,7 +25,7 @@ const PORT = configs.port;
 
 // const productsRouter = new ProductsRouter()
 // const sessionsRouter = new SessionsRouter()
-const cartsRouter = new CartsRouter()
+// const cartsRouter = new CartsRouter()
 // const viewsRouter = new ViewsRouter()
 
 
@@ -68,7 +68,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/products", ProductsRouter);
-app.use("/api/carts", cartsRouter.getRouter());
+app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter)
 app.use("/", ViewsRouter);
 

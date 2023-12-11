@@ -1,5 +1,4 @@
 import { Router } from "express";
-// import Router from "./router.js";
 // import ProductManager from "../dao/fileManagers/product-file.manager.js";
 
 import { productsFilePath } from "../utils.js";
