@@ -3,13 +3,9 @@ import { productsFilePath } from "../utils.js";
 
 const productsManager = new Products();
 
-export const getProducts = async (req, res) => {
-	const { limit = 10, page = 1, sort, query: queryP, queryValue } = req.query;
-	const options = {
-		limit,
-		page,
-		query: {}
-	};
+export const getProducts = async (options, sort, queryP, queryValue) => {
+
+	const { limit, page } = options
 	let sortLink = "";
 	if (sort?.toLowerCase() === "asc") {
 		options.sort = { price: 1 };
@@ -57,8 +53,26 @@ export const getProducts = async (req, res) => {
   };
 };
 
-export const getProduct = async (req, res) => {};
+export const getProduct = async (pid) => {
+	const product = productsManager.getById(pid)
+	return product
+};
 
-export const updateProduct = async (req, res) => {};
+export const createProduct = async (product) => {
+	const result = productsManager.create(product)
+	return result
+};
 
-export const deleteProduct = async (req, res) => {};
+export const updateProduct = async (pid, product) => {
+	const productExists = await productsManager.getById(pid);
+	if (!productExists) return { status: "error", error: "Product not found, incorrect id" }
+	const updatedProduct = await productsManager.update(pid, product);
+	return updatedProduct
+};
+
+export const deleteProduct = async (pid) => {
+	const productExists = await productsManager.getById(pid);
+	if (!productExists) return { status: "error", error: "Product not found, incorrect id" }
+	const deletedProduct = await productsManager.delete(pid);
+	return deletedProduct
+};

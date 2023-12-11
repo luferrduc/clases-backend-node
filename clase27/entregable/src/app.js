@@ -2,15 +2,15 @@ import path from "node:path";
 import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
+import mongoose from "mongoose";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 import { __dirname } from "./utils.js";
 import SessionsRouter from "./routes/sessions.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import ViewsRouter from "./routes/views.routes.js";
-import mongoose from "mongoose";
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import cookieParser from "cookie-parser";
 import configs from "./config.js";
 
 // Manager de los mensajes
@@ -24,7 +24,7 @@ const PORT = configs.port;
 // const productsRouter = new ProductsRouter()
 const sessionsRouter = new SessionsRouter()
 const cartsRouter = new CartsRouter()
-const viewsRouter = new ViewsRouter()
+// const viewsRouter = new ViewsRouter()
 
 
 // Database
@@ -68,7 +68,7 @@ app.use(passport.session());
 app.use("/api/products", ProductsRouter);
 app.use("/api/carts", cartsRouter.getRouter());
 app.use("/api/sessions", sessionsRouter.getRouter())
-// app.use("/", viewsRouter.getRouter());
+app.use("/", ViewsRouter);
 
 app.use((req, res)=> {
   res.status(404).send({status:"error", message: "404 not found"})
