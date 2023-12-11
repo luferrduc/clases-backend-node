@@ -62,7 +62,7 @@ export const initializePassport = () => {
 					}
 				} catch (error) {
 					console.log(error);
-					return done("Incorrect credentials");
+					return done("incorrect credentials");
 				}
 			}
 		)

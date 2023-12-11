@@ -8,15 +8,13 @@ const program = new Command()
 program.option("--mode <mode>", "variable de ambiente de desarrollo", "DEV")
 program.parse()
 
-// DEVELOPMENT, PRODUCTION
+// DEVELOPMENT = DEV, PRODUCTION = PROD
 const environment = program.opts().mode
-// console.log(`..${__dirname}/.env.development`)
+
 config({
   path: (environment === 'DEV') ? `./.env.development` : `./.env.production`,
 
 })
-
-// console.log("PORT",process.env)
 
 const configs = {
   port: process.env.PORT || 8080,
