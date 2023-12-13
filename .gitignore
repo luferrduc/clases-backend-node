@@ -1,1 +1,3 @@
 node_modules
+/clase27/entregable/.env.development
+/clase27/entregable/.env.production
