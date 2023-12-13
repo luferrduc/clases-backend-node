@@ -25,15 +25,8 @@ export const register = async (user) => {
   return result
 }
 
-export const logout = async (req, res) => {
-  const result = usersManager.deleteCartFromUser(req.user.email);
+export const logout = async (email) => {
+  const result = await usersManager.deleteCartFromUser(email);
   return result
 }
 
-export const github = async (req, res) => {
-
-}
-
-export const githubCallback = async (req, res) => {
-
-}

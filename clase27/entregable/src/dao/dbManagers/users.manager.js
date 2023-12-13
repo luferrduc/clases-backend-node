@@ -28,7 +28,10 @@ export default class Users {
 
 	deleteCartFromUser = async ({email}) => {
 		const user = await usersModel.findOne({email}).lean()
-		delete user?.cart
+		if(user?.cart){
+			delete user?.cart
+			usersModel.findOneAndUpdate({email}, user)
+		}
 		return user
 	}
 }

@@ -22,7 +22,7 @@ export const addProduct = async (cid, pid) => {
 	if (!product) return { status: "error", error: "Product not found" };
 
 	const cart = await cartsManager.addProduct(cid, pid);
-	console.log(cart);
+
 	if (!cart) return { status: "error", error: "Cart or product not found" };
 	return cart;
 };
@@ -33,20 +33,22 @@ export const updateCart = async (cid, products) => {
 	return updatedCart;
 };
 export const updateProducts = async (cid, pid, quantity) => {
+
 	const product = await productsManager.getById(pid);
-	if (!product) return res.sendNotFoundError("Product not found");
+	
+	if (!product) return { status: "error", error: "Product not found", statusCode: 404 };
 
 	const cart = await cartsManager.getById(cid);
-	if (!cart) return res.sendNotFoundError("Cart not found");
-
-	if (!quantity) return res.sendUnproccesableEntity("Quantity is required");
+	if (!cart)	return { status: "error", error: "Cart not found", statusCode: 404 };
+	
+	if (!quantity) return { status: "error", error: "Quantity is required", statusCode: 422 };
 
 	const updatedQuantityCart = await cartsManager.updateQuantityProduct(
 		cid,
 		pid,
 		quantity
 	);
-	return res.sendSucess(updatedQuantityCart);
+	return updatedQuantityCart
 };
 // Delete all products in cart
 export const deleteCartProducts = async (cid) => {

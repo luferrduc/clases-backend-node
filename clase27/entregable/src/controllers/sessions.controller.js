@@ -2,9 +2,7 @@ import { generateToken } from "../utils.js";
 import { validateUser } from "../schemas/users.schema.js";
 import { login as loginServices } from "../services/sessions.services.js";
 import { logout as logoutServices } from "../services/sessions.services.js";
-import { github as githubServices } from "../services/sessions.services.js";
 import { register as registerServices } from "../services/sessions.services.js";
-import { githubCallback as githubCallbackServices } from "../services/sessions.services.js";
 
 export const login = async (req, res) => {
 	try {

@@ -57,18 +57,13 @@ export const updateProducts = async (req, res) => {
   try {
     const { quantity } = req.body;
     const { cid, pid } = req.params
-    const product = await this.productManager.getById(pid);
-    if (!product)
-      return res.sendNotFoundError("Product not found");
 
-    const cart = await this.cartsManager.getById(cid);
-    if (!cart)
-      return res.sendNotFoundError("Cart not found");
-
-    if (!quantity)
-      return res.sendUnproccesableEntity("Quantity is required");
-
-    const updatedQuantityCart = await this.cartsManager.updateQuantityProduct(cid, pid, quantity)
+    const result = await updateProductsServices(cid, pid, quantity) 
+    if(result.error){
+      if(result.statusCode === 404) return res.sendNotFoundError(result.error)
+      if(result.statusCode === 422) return res.sendUnproccesableEntity(result.error)
+    }
+    const updatedQuantityCart = await cartsManager.updateQuantityProduct(cid, pid, quantity)
     return res.sendSucess(updatedQuantityCart);
   } catch (error) {
     return res.sendServerError(error.message);
