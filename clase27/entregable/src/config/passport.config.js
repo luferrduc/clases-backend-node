@@ -22,7 +22,6 @@ export const initializePassport = () => {
     secretOrKey: PRIVATE_KEY_JWT
   }, async(jwt_payload, done) => {
     try {
-		
       return done(null, jwt_payload.user)
     } catch (error) {
       return done(error)

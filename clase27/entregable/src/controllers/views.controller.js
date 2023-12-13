@@ -148,8 +148,6 @@ export const chat = async (req, res) => {
 }
 	
 export const login = async (req, res) => {
-
-  if(req?.user) return res.redirect("/products")
   return res.render("login", { style: "login.css" });
 }
 
