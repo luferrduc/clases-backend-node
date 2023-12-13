@@ -20,7 +20,7 @@ export default class Carts {
 
   addProduct = async (cid, pid) => {
     const cart = await cartsModel.findById({ _id: cid });
-
+  
     if(!cart) return null
     
     if (cart?.products?.length > 0) {

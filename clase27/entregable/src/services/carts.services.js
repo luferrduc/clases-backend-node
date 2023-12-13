@@ -1,5 +1,8 @@
 import Carts from "../dao/dbManagers/carts.manager.js";
 import Products from "../dao/dbManagers/products.manager.js";
+import { validateCart } from "../schemas/carts.schema.js";
+// import CartManager from "../dao/fileManagers/cart-file.manager.js";
+import { cartsFilePath } from "../utils.js";
 
 const productsManager = new Products();
 const cartsManager = new Carts();
@@ -12,72 +15,55 @@ export const getCart = async (cid) => {
 };
 export const createCart = async () => {
 	const cart = await cartsManager.create();
-	return res.sendSuccess(cart);
+	return cart;
 };
-export const addProduct = async () => {
-	try {
-		const { cid, pid } = req.params;
-		const product = await productsManager.getById(pid);
-		if (!product) return res.sendNotFoundError("Product not found");
+export const addProduct = async (cid, pid) => {
+	const product = await productsManager.getById(pid);
+	if (!product) return { status: "error", error: "Product not found" };
 
-		const cart = await this.cartsManager.addProduct(cid, pid);
-		if (!cart) return res.sendNotFoundError("Cart or product not found");
-		return res.sendSuccess(cart);
-	} catch (error) {
-		return res.sendServerError(error.message);
-	}
+	const cart = await cartsManager.addProduct(cid, pid);
+	console.log(cart);
+	if (!cart) return { status: "error", error: "Cart or product not found" };
+	return cart;
 };
 export const updateCart = async (cid, products) => {
 	const updatedCart = await cartsManager.updateCart(cid, products);
 	if (!updatedCart)
-		return { status: "error", error: "Cart or product not found" }
-	return updatedCart
+		return { status: "error", error: "Cart or product not found" };
+	return updatedCart;
 };
-export const updateProducts = async () => {
-	try {
-		const { quantity } = req.body;
-		const { cid, pid } = req.params;
-		const product = await productsManager.getById(pid);
-		if (!product) return res.sendNotFoundError("Product not found");
+export const updateProducts = async (cid, pid, quantity) => {
+	const product = await productsManager.getById(pid);
+	if (!product) return res.sendNotFoundError("Product not found");
 
-		const cart = await cartsManager.getById(cid);
-		if (!cart) return res.sendNotFoundError("Cart not found");
+	const cart = await cartsManager.getById(cid);
+	if (!cart) return res.sendNotFoundError("Cart not found");
 
-		if (!quantity) return res.sendUnproccesableEntity("Quantity is required");
+	if (!quantity) return res.sendUnproccesableEntity("Quantity is required");
 
-		const updatedQuantityCart = await cartsManager.updateQuantityProduct(
-			cid,
-			pid,
-			quantity
-		);
-		return res.sendSucess(updatedQuantityCart);
-	} catch (error) {
-		return res.sendServerError(error.message);
-	}
+	const updatedQuantityCart = await cartsManager.updateQuantityProduct(
+		cid,
+		pid,
+		quantity
+	);
+	return res.sendSucess(updatedQuantityCart);
 };
-export const deleteProduct = async () => {
-	try {
-		const { cid } = req.params;
-		const cart = await cartsManager.getById(cid);
-		if (!cart) return res.sendNotFoundError("Cart not found");
-		const result = await cartsManager.deleteProducts(cid);
-		return res.sendSuccess(result);
-	} catch (error) {
-		if (error.message.toLowerCase().includes("not found"))
-			return res.sendNotFoundError(error.message);
-		return res.sendServerError(error.message);
-	}
+// Delete all products in cart
+export const deleteCartProducts = async (cid) => {
+	const cart = await cartsManager.getById(cid);
+	if (!cart) return { status: "error", error: "Cart not found" };
+	const result = await cartsManager.deleteProducts(cid);
+	return result;
 };
-export const deleteCart = async () => {
-	try {
-		const { cid } = req.params;
-		const cart = await cartsManager.getById(cid);
-		if (!cart) return res.sendNotFoundError("Cart not found");
-		const result = await cartsManager.deleteProducts(cid);
-		return res.sendSuccess(result);
-	} catch (error) {
-		if (error.message.toLowerCase().includes("not found"))
-			return res.sendNotFoundError(error.message);
-		return res.sendServerError(error.message);
-	}
+// Delete one product in cart
+export const deleteProduct = async (cid, pid) => {
+	const cart = await cartsManager.getById(cid);
+	if (!cart)
+	return { status: "error", error: "Cart not found", statusCode: 404 };
+	const product = await productsManager.getById(pid);
+	if (!product)
+		return { status: "error", error: "Product not found", statusCode: 404  };
+
+	const result = await cartsManager.deleteProductCart(cid, pid);
+	return result
 };

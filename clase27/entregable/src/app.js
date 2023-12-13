@@ -8,6 +8,8 @@ import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import { __dirname } from "./utils.js";
 import configs from "./config.js";
+import { initializePassport } from "./config/passport.config.js";
+import passport from "passport";
 
 // Import Routes 
 import SessionsRouter from "./routes/sessions.routes.js";
@@ -17,17 +19,10 @@ import ViewsRouter from "./routes/views.routes.js";
 
 // Manager de los mensajes
 import MessageManager from "./dao/dbManagers/messages.manager.js"
-import { initializePassport } from "./config/passport.config.js";
-import passport from "passport";
+
 
 const app = express();
 const PORT = configs.port;
-
-// const productsRouter = new ProductsRouter()
-// const sessionsRouter = new SessionsRouter()
-// const cartsRouter = new CartsRouter()
-// const viewsRouter = new ViewsRouter()
-
 
 // Database
 try {
