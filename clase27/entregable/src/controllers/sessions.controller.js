@@ -1,4 +1,4 @@
-import { generateToken } from "../utils.js";
+import { generateToken, createHash, isValidPassowrd } from "../utils.js";
 import { validateUser } from "../schemas/users.schema.js";
 import { login as loginServices } from "../services/sessions.services.js";
 import { logout as logoutServices } from "../services/sessions.services.js";
@@ -25,9 +25,16 @@ export const login = async (req, res) => {
 			});
 			return res.sendSuccess(accessToken);
 		}
-		const user = await loginServices(email, password);
+		const user = await loginServices(email);
+		if(!user) return res.sendAuthError("incorrect credentials")
 
-		if (user.error) return res.sendAuthError(user.error);
+		const comparePassword = isValidPassowrd(password, user.password);
+
+		if(!comparePassword) return res.sendAuthError("incorrect credentials")
+
+		delete user.password;
+		delete user["_id"];
+
 		const accessToken = generateToken(user);
 
 		res.cookie("coderCookieToken", accessToken, {
@@ -46,9 +53,11 @@ export const register = async (req, res) => {
 		const resultUser = validateUser(req.body);
 		if (resultUser.error) return res.sendUnproccesableEntity(resultUser.error);
 		const user = resultUser.data;
-		const registeredUser = await registerServices(user)
-		if (registeredUser.error) return res.sendClientError(registeredUser.error);
 
+		const existsUser = await loginServices(user.email);
+		if(existsUser) return res.sendClientError( "user already exists")
+
+		const registeredUser = await registerServices(user)
 		return res.sendSuccessNewResource({ payload: registeredUser});
 	} catch (error) {
 		return res.sendServerError(error.message);

@@ -64,15 +64,11 @@ export const createProduct = async (product) => {
 };
 
 export const updateProduct = async (pid, product) => {
-	const productExists = await productsManager.getById(pid);
-	if (!productExists) return { status: "error", error: "Product not found, incorrect id" }
 	const updatedProduct = await productsManager.update(pid, product);
 	return updatedProduct
 };
 
 export const deleteProduct = async (pid) => {
-	const productExists = await productsManager.getById(pid);
-	if (!productExists) return { status: "error", error: "Product not found, incorrect id" }
 	const deletedProduct = await productsManager.delete(pid);
 	return deletedProduct
 };

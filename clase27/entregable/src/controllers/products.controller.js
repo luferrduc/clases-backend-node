@@ -23,7 +23,7 @@ export const getProducts = async (req, res) => {
       sortLink
     } = await getProductsServices(options, sort, queryP, queryValue);
     if (!products)
-      return res.status(200).send({ status: "success", payload: [] });
+      return res.sendSuccess([]);
 
     const prevLink = hasPrevPage
       ? `/api/products?limit=${limit}&page=${prevPage}${sortLink}`
@@ -94,10 +94,11 @@ export const updateProduct = async (req, res) => {
     if(result.error)
       return res.sendClientError(result.error);
 
-    const productUpdated = await updateProductServices(pid, result.data);
-    if (productUpdated.error)
-      return res.sendNotFoundError(productUpdated.error);
+    const productExists = await getProductServices(pid);
 
+    if(!productExists) return res.sendNotFoundError("Product not found, incorrect id")
+
+    const productUpdated = await updateProductServices(pid, result.data);
     const { products: productsEmit } = await getProductsServices(options);
     io.emit("refreshProducts", productsEmit);
 
@@ -117,10 +118,10 @@ export const deleteProduct = async (req, res) => {
     
     const io = req.app.get("socketio");
     
-    const deletedProduct = await deleteProductServices(pid);
-    if (deletedProduct.error)
-      return res.sendNotFoundError(deletedProduct.error);
+    const productExists = await getProduct(pid);
+    if(!productExists) return res.sendNotFoundError("Product not found, incorrect id")
 
+    const deletedProduct = await deleteProductServices(pid);
     const { products: productsEmit } = await getProductsServices(options);
     io.emit("refreshProducts", productsEmit);
     return res.sendSuccess("Product deleted succesfully");
