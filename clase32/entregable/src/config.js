@@ -20,5 +20,6 @@ const configs = {
   port: process.env.PORT || 8080,
   mongoUrl: process.env.MONGO_URL,
   persistence: process.env.PERSISTENCE || 'MONGO',
+  privateKeyJWT: process.env.PRIVATE_KEY_JWT
 }
 export default configs

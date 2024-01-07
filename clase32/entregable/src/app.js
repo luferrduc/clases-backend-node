@@ -25,13 +25,13 @@ const app = express();
 const PORT = configs.port;
 
 // Database
-try {
-  await mongoose.connect(configs.mongoUrl) 
-  console.log("Database connected")
-} catch (error) {
-  console.log(error.message)
-  mongoose.disconnect()
-}
+// try {
+//   await mongoose.connect(configs.mongoUrl) 
+//   console.log("Database connected")
+// } catch (error) {
+//   console.log(error.message)
+//   mongoose.disconnect()
+// }
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
