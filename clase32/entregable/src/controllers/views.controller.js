@@ -1,12 +1,3 @@
-import { cartDetail as cartDetailServices } from "../services/views.services.js"
-import { chat as chatServices } from "../services/views.services.js"
-import { login as loginServices } from "../services/views.services.js"
-import { productDetail as productDetailServices } from "../services/views.services.js"
-import { profile as profileServices } from "../services/views.services.js"
-import { productsView as productsViewServices } from "../services/views.services.js"
-import { register as registerServices } from "../services/views.services.js"
-import { realTimeProductsView as realTimeProductsViewServices } from "../services/views.services.js"
-
 import Products from "../dao/dbManagers/products.manager.js";
 import Carts from "../dao/dbManagers/carts.manager.js";
 import Messages from "../dao/dbManagers/messages.manager.js";

@@ -1,0 +1,323 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.Generar usuario mockeado y crear una cuenta de usuario": 200,
+      "vusers.created": 200,
+      "http.requests": 200,
+      "http.codes.200": 200,
+      "http.responses": 200,
+      "http.downloaded_bytes": 20137,
+      "plugins.metrics-by-endpoint./api/faker.codes.200": 200,
+      "errors.Failed capture or match": 200,
+      "vusers.failed": 200
+    },
+    "rates": {
+      "http.request_rate": 10
+    },
+    "firstCounterAt": 1704936984628,
+    "firstHistogramAt": 1704936984650,
+    "lastCounterAt": 1704937004090,
+    "lastHistogramAt": 1704937004089,
+    "firstMetricAt": 1704936984628,
+    "lastMetricAt": 1704937004090,
+    "period": 1704937000000,
+    "summaries": {
+      "http.response_time": {
+        "min": 0,
+        "max": 24,
+        "count": 200,
+        "mean": 1.1,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 1,
+        "p95": 2,
+        "p99": 6,
+        "p999": 6
+      },
+      "plugins.metrics-by-endpoint.response_time./api/faker": {
+        "min": 0,
+        "max": 24,
+        "count": 200,
+        "mean": 1.1,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 1,
+        "p95": 2,
+        "p99": 6,
+        "p999": 6
+      }
+    },
+    "histograms": {
+      "http.response_time": {
+        "min": 0,
+        "max": 24,
+        "count": 200,
+        "mean": 1.1,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 1,
+        "p95": 2,
+        "p99": 6,
+        "p999": 6
+      },
+      "plugins.metrics-by-endpoint.response_time./api/faker": {
+        "min": 0,
+        "max": 24,
+        "count": 200,
+        "mean": 1.1,
+        "p50": 1,
+        "median": 1,
+        "p75": 1,
+        "p90": 1,
+        "p95": 2,
+        "p99": 6,
+        "p999": 6
+      }
+    }
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.Generar usuario mockeado y crear una cuenta de usuario": 58,
+        "vusers.created": 58,
+        "http.requests": 58,
+        "http.codes.200": 58,
+        "http.responses": 58,
+        "http.downloaded_bytes": 5820,
+        "plugins.metrics-by-endpoint./api/faker.codes.200": 58,
+        "errors.Failed capture or match": 58,
+        "vusers.failed": 58
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1704936984628,
+      "firstHistogramAt": 1704936984650,
+      "lastCounterAt": 1704936989989,
+      "lastHistogramAt": 1704936989988,
+      "firstMetricAt": 1704936984628,
+      "lastMetricAt": 1704936989989,
+      "period": "1704936980000",
+      "summaries": {
+        "http.response_time": {
+          "min": 0,
+          "max": 4,
+          "count": 58,
+          "mean": 1,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 2,
+          "p95": 2,
+          "p99": 3,
+          "p999": 3
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 4,
+          "count": 58,
+          "mean": 1,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 2,
+          "p95": 2,
+          "p99": 3,
+          "p999": 3
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 0,
+          "max": 4,
+          "count": 58,
+          "mean": 1,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 2,
+          "p95": 2,
+          "p99": 3,
+          "p999": 3
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 4,
+          "count": 58,
+          "mean": 1,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 2,
+          "p95": 2,
+          "p99": 3,
+          "p999": 3
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generar usuario mockeado y crear una cuenta de usuario": 100,
+        "vusers.created": 100,
+        "http.requests": 100,
+        "http.codes.200": 100,
+        "http.responses": 100,
+        "http.downloaded_bytes": 10061,
+        "plugins.metrics-by-endpoint./api/faker.codes.200": 100,
+        "errors.Failed capture or match": 100,
+        "vusers.failed": 100
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1704936990035,
+      "firstHistogramAt": 1704936990038,
+      "lastCounterAt": 1704936999988,
+      "lastHistogramAt": 1704936999988,
+      "firstMetricAt": 1704936990035,
+      "lastMetricAt": 1704936999988,
+      "period": "1704936990000",
+      "summaries": {
+        "http.response_time": {
+          "min": 0,
+          "max": 24,
+          "count": 100,
+          "mean": 1.2,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 6,
+          "p999": 6
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 24,
+          "count": 100,
+          "mean": 1.2,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 6,
+          "p999": 6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 0,
+          "max": 24,
+          "count": 100,
+          "mean": 1.2,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 6,
+          "p999": 6
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 24,
+          "count": 100,
+          "mean": 1.2,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 6,
+          "p999": 6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generar usuario mockeado y crear una cuenta de usuario": 42,
+        "vusers.created": 42,
+        "http.requests": 42,
+        "http.codes.200": 42,
+        "http.responses": 42,
+        "http.downloaded_bytes": 4256,
+        "plugins.metrics-by-endpoint./api/faker.codes.200": 42,
+        "errors.Failed capture or match": 42,
+        "vusers.failed": 42
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1704937000035,
+      "firstHistogramAt": 1704937000040,
+      "lastCounterAt": 1704937004090,
+      "lastHistogramAt": 1704937004089,
+      "firstMetricAt": 1704937000035,
+      "lastMetricAt": 1704937004090,
+      "period": "1704937000000",
+      "summaries": {
+        "http.response_time": {
+          "min": 0,
+          "max": 2,
+          "count": 42,
+          "mean": 0.8,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 2,
+          "p999": 2
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 2,
+          "count": 42,
+          "mean": 0.8,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 2,
+          "p999": 2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 0,
+          "max": 2,
+          "count": 42,
+          "mean": 0.8,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 2,
+          "p999": 2
+        },
+        "plugins.metrics-by-endpoint.response_time./api/faker": {
+          "min": 0,
+          "max": 2,
+          "count": 42,
+          "mean": 0.8,
+          "p50": 1,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 2,
+          "p99": 2,
+          "p999": 2
+        }
+      }
+    }
+  ]
+}

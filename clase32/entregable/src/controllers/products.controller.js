@@ -5,6 +5,8 @@ import { createProduct as createProductServices } from "../services/products.ser
 import { updateProduct as updateProductServices } from "../services/products.services.js";
 import { deleteProduct as deleteProductServices } from "../services/products.services.js";
 import { generateProducts } from "../utils.js";
+import CustomError from "../middlewares/errors/CustomError.js"
+import EnumErrors from "../middlewares/errors/enums.js"
 
 export const getProducts = async (req, res) => {
 	try {
@@ -52,11 +54,19 @@ export const getProduct = async (req, res) => {
 	try {
 		const { pid } = req.params;
 		const product = await getProductServices(pid);
-		if (!product) return res.sendNotFoundError("Product not found");
+		// if (!product) return res.sendNotFoundError("Product not found");
+		if (!product) throw CustomError.createError({
+			name: "Product Error",
+			cause: "Product not found",
+			messagge: "Product with this id doesn't exists",
+			code: EnumErrors.RESORUCE_NOT_FOUND
+		})
+
 
 		return res.sendSuccess(product);
 	} catch (error) {
-		return res.sendServerError(error.message);
+		console.log(error.message)
+		return res.send(error);
 	}
 };
 

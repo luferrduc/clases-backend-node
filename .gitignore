@@ -3,3 +3,5 @@ node_modules
 /clase27/entregable/.env.production
 /clase32/entregable/.env.development
 /clase32/entregable/.env.production
+pnpm-lock.yaml
+package-lock.json
