@@ -1,4 +1,5 @@
 import { Router } from "express";
+import toAsyncRouter from "async-express-decorator"
 import { accessRolesEnum, passportStrategiesEnum } from "../config/enums.js";
 import { handlePolicies } from "../middlewares/auth.js";
 import { passportCall } from "../config/passport.config.js";
@@ -12,7 +13,7 @@ import {
 	mockingProducts
 } from "../controllers/products.controller.js";
 
-const router = Router();
+const router = toAsyncRouter(Router());
 
 router
 	.get(

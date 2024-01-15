@@ -10,6 +10,7 @@ import { __dirname } from "./utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
+import errorHandler from "./middlewares/errors/index.js"
 
 // Import Routes 
 import SessionsRouter from "./routes/sessions.routes.js";
@@ -66,6 +67,8 @@ app.use("/api/products", ProductsRouter);
 app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter)
 app.use("/", ViewsRouter);
+
+app.use(errorHandler)
 
 app.use((req, res)=> {
   res.status(404).send({status:"error", message: "404 not found"})

@@ -54,19 +54,24 @@ export const getProduct = async (req, res) => {
 	try {
 		const { pid } = req.params;
 		const product = await getProductServices(pid);
-		// if (!product) return res.sendNotFoundError("Product not found");
-		if (!product) throw CustomError.createError({
-			name: "Product Error",
-			cause: "Product not found",
-			messagge: "Product with this id doesn't exists",
-			code: EnumErrors.RESORUCE_NOT_FOUND
-		})
+		if (!product) return res.sendNotFoundError({
+				name: "Product Error",
+				cause: "Product not found",
+				messagge: "Product with this id doesn't exists",
+				code: EnumErrors.RESORUCE_NOT_FOUND
+			});
+		// if (!product) throw CustomError.createError({
+		// 	name: "Product Error",
+		// 	cause: "Product not found",
+		// 	messagge: "Product with this id doesn't exists",
+		// 	code: EnumErrors.RESORUCE_NOT_FOUND
+		// })
 
 
 		return res.sendSuccess(product);
 	} catch (error) {
-		console.log(error.message)
-		return res.send(error);
+		console.log(error.message, error.name, error.cause)
+		return res.sendServerError(error);
 	}
 };
 

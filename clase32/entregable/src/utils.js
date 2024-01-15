@@ -50,6 +50,5 @@ export const generateProducts = () => {
 		status: faker.datatype.boolean(),
     category: faker.commerce.product()
 	};
-  console.log(product)
 	return product;
 };
