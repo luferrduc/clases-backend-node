@@ -2,6 +2,7 @@ import winston from "winston";
 import configs from "../config.js";
 // Ejercicio multientorno
 const ENVIRONMENT = configs.environment;
+console.log(ENVIRONMENT)
 let logger;
 
 const customLevelOptions = {
@@ -15,17 +16,18 @@ const customLevelOptions = {
 	},
 	colors: {
 		fatal: "red",
-		error: "orange",
+		error: "magenta",
 		warning: "yellow",
 		info: "green",
-		http: "",
+		http: "cyan",
 		debug: "blue"
 	}
 };
 
-if (ENVIRONMENT == "production") {
+if (ENVIRONMENT == "PROD") {
 	// prodLogger
 	logger = winston.createLogger({
+		levels: customLevelOptions.levels,
 		transports: [
 			new winston.transports.Console({
 				level: "info",
@@ -46,6 +48,7 @@ if (ENVIRONMENT == "production") {
 } else {
 	// devLogger
 	logger = winston.createLogger({
+		levels: customLevelOptions.levels,
 		transports: [
 			new winston.transports.Console({
 				level: "debug",

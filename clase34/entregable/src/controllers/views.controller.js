@@ -37,6 +37,7 @@ export const realTimeProductsView = async (req, res) => {
       prevPage
     });
   } catch (error) {
+    req.logger.error(`${error.message}`);
     return res.status(500).send(`<h2>Error 500: ${error.message}</h2>`);
   }
 }
@@ -92,6 +93,7 @@ export const productsView = async (req, res) => {
       style: "products.css"
     });
   } catch (error) {
+    req.logger.error(`${error.message}`);
     return res.status(500).send(`<h2>Error 500: ${error.message} </h2>`);
   }
 }
@@ -110,6 +112,7 @@ export const productDetail = async (req, res) => {
       style: "product.css"
     });
   } catch (error) {
+    req.logger.error(`${error.message}`);
     return res.status(500).send(`<h2>Error 500: ${error.message} </h2>`);
   }
 }
@@ -132,6 +135,7 @@ export const cartDetail = async (req, res) => {
       style: "cart.css"
     });
   } catch (error) {
+    req.logger.error(`${error.message}`);
     return res.status(500).send(`<h2>Error 500: ${error.message}</h2>`);
   }
 }

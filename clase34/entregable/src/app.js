@@ -10,24 +10,24 @@ import { __dirname } from "./utils/utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
-import errorHandler from "./middlewares/errors/index.js"
+import errorHandler from "./middlewares/errors/index.js";
+import { addLogger } from "./utils/logger.js";
 
-// Import Routes 
+// Import Routes
 import SessionsRouter from "./routes/sessions.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import ViewsRouter from "./routes/views.routes.js";
 
 // Manager de los mensajes
-import MessageManager from "./dao/dbManagers/messages.manager.js"
-
+import MessageManager from "./dao/dbManagers/messages.manager.js";
 
 const app = express();
 const PORT = configs.port;
 
 // Database
 // try {
-//   await mongoose.connect(configs.mongoUrl) 
+//   await mongoose.connect(configs.mongoUrl)
 //   console.log("Database connected")
 // } catch (error) {
 //   console.log(error.message)
@@ -38,13 +38,14 @@ const PORT = configs.port;
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", ".hbs");
+app.use(addLogger);
 
 // Middlewares
-app.disable('X-Powered-By')
+app.disable("X-Powered-By");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(
 	session({
 		store: MongoStore.create({
@@ -65,43 +66,51 @@ app.use(passport.session());
 // Routes
 app.use("/api/products", ProductsRouter);
 app.use("/api/carts", CartsRouter);
-app.use("/api/sessions", SessionsRouter)
+app.use("/api/sessions", SessionsRouter);
+app.get("/api/loggerTest", (req, res) => {
+	// Prueba de custom levels logger
+	req.logger.fatal("Prueba para logger fatal");
+	req.logger.error("Prueba para logger error");
+	req.logger.warning("Prueba para logger warning");
+	req.logger.info("Prueba para logger info");
+	req.logger.http("Prueba para logger http");
+	req.logger.debug("Prueba para logger debug");
+  res.send({ status: "success", message: "Logger tested successfully"})
+});
 app.use("/", ViewsRouter);
 
-app.use(errorHandler)
+app.use(errorHandler);
 
-app.use((req, res)=> {
-  res.status(404).send({status:"error", message: "404 not found"})
-})
-
+app.use((req, res) => {
+	res.status(404).send({ status: "error", message: "404 not found" });
+});
 
 // Server
 const server = app.listen(PORT, () => {
-  console.log(`Server is ready on http://localhost:${PORT}`);
+	console.log(`Server is ready on http://localhost:${PORT}`);
 });
 
-const socketServer = new Server(server)
+const socketServer = new Server(server);
 
-socketServer.on("connection", socket => {
-  const messagesManager = new MessageManager()
-  console.log("Cliente conectado")
+socketServer.on("connection", (socket) => {
+	const messagesManager = new MessageManager();
+	console.log("Cliente conectado");
 
-  socket.on("message", async (data) => {
-    try {
-      const result = await messagesManager.create(data)
-      const messages = await messagesManager.getAll()
-      socketServer.emit("messageLogs", messages)
-    } catch (error) {
-      console.error({error: error.message})
-    }
-  
-  })
+	socket.on("message", async (data) => {
+		try {
+			const result = await messagesManager.create(data);
+			const messages = await messagesManager.getAll();
+			socketServer.emit("messageLogs", messages);
+		} catch (error) {
+			console.error({ error: error.message });
+		}
+	});
 
-  socket.on("authenticated", async (data) => {
-    const messages = await messagesManager.getAll()
-    socket.emit("messageLogs", messages)
-    socket.broadcast.emit("newUserConnected", data)
-  })
-})
+	socket.on("authenticated", async (data) => {
+		const messages = await messagesManager.getAll();
+		socket.emit("messageLogs", messages);
+		socket.broadcast.emit("newUserConnected", data);
+	});
+});
 
-app.set('socketio', socketServer)
+app.set("socketio", socketServer);

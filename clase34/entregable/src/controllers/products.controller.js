@@ -5,8 +5,8 @@ import { createProduct as createProductServices } from "../services/products.ser
 import { updateProduct as updateProductServices } from "../services/products.services.js";
 import { deleteProduct as deleteProductServices } from "../services/products.services.js";
 import { generateProducts } from "../utils/utils.js";
-import CustomError from "../middlewares/errors/CustomError.js"
-import EnumErrors from "../middlewares/errors/enums.js"
+import CustomError from "../middlewares/errors/CustomError.js";
+import EnumErrors from "../middlewares/errors/enums.js";
 
 export const getProducts = async (req, res) => {
 	try {
@@ -46,6 +46,7 @@ export const getProducts = async (req, res) => {
 			nextLink
 		);
 	} catch (error) {
+		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
 };
@@ -54,10 +55,11 @@ export const getProduct = async (req, res) => {
 	try {
 		const { pid } = req.params;
 		const product = await getProductServices(pid);
-		if (!product) return res.sendNotFoundError({
+		if (!product)
+			return res.sendNotFoundError({
 				name: "Product Error",
 				cause: "Product not found",
-				messagge: "Product with this id doesn't exists",
+				messagge: `Product with ´id´ '${pid}' doesn't exists`,
 				code: EnumErrors.RESORUCE_NOT_FOUND
 			});
 		// if (!product) throw CustomError.createError({
@@ -67,10 +69,9 @@ export const getProduct = async (req, res) => {
 		// 	code: EnumErrors.RESORUCE_NOT_FOUND
 		// })
 
-
 		return res.sendSuccess(product);
 	} catch (error) {
-		console.log(error.message, error.name, error.cause)
+		req.logger.error(`${error.message}`);
 		return res.sendServerError(error);
 	}
 };
@@ -84,12 +85,16 @@ export const createProduct = async (req, res) => {
 		};
 		const result = validateProduct(req.body);
 		const io = req.app.get("socketio");
-		if (result.error) return res.sendClientError(result.error);
+		if (result.error) {
+			req.logger.warning(`${result.error}`)
+			return res.sendClientError(result.error);
+		}
 		const newProduct = await createProductServices(result.data);
 		const { products: productsEmit } = await getProductsServices(options);
 		io.emit("refreshProducts", productsEmit);
 		return res.sendSuccess(newProduct);
 	} catch (error) {
+		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
 };
@@ -117,6 +122,7 @@ export const updateProduct = async (req, res) => {
 
 		return res.sendSuccess(productUpdated);
 	} catch (error) {
+		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
 };
@@ -140,6 +146,7 @@ export const deleteProduct = async (req, res) => {
 		io.emit("refreshProducts", productsEmit);
 		return res.sendSuccess("Product deleted succesfully");
 	} catch (error) {
+		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
 };
@@ -152,6 +159,7 @@ export const mockingProducts = (req, res) => {
 		}
 		return res.sendSuccess(products);
 	} catch (error) {
-    return res.sendServerError(error.message);
-  }
+		req.logger.error(`${error.message}`);
+		return res.sendServerError(error.message);
+	}
 };
