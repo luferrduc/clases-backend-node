@@ -1,5 +1,5 @@
 import Products from "../dao/dbManagers/products.manager.js";
-import { productsFilePath } from "../utils.js";
+import { productsFilePath } from "../utils/utils.js";
 import ProductsRepository from "../repositories/products.repository.js";
 
 const productsManager = new Products();

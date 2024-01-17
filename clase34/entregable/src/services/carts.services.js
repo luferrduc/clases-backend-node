@@ -4,7 +4,7 @@ import { validateCart } from "../schemas/carts.schema.js";
 import CartsRepository from "../repositories/carts.repository.js";
 import ProductsRepository from "../repositories/products.repository.js";
 // import CartManager from "../dao/fileManagers/cart-file.manager.js";
-import { cartsFilePath } from "../utils.js";
+import { cartsFilePath } from "../utils/utils.js";
 import { generateTicket } from "./tickets.services.js";
 
 const productsManager = new Products();

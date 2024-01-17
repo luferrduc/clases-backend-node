@@ -4,7 +4,7 @@ import { getProduct as getProductServices } from "../services/products.services.
 import { createProduct as createProductServices } from "../services/products.services.js";
 import { updateProduct as updateProductServices } from "../services/products.services.js";
 import { deleteProduct as deleteProductServices } from "../services/products.services.js";
-import { generateProducts } from "../utils.js";
+import { generateProducts } from "../utils/utils.js";
 import CustomError from "../middlewares/errors/CustomError.js"
 import EnumErrors from "../middlewares/errors/enums.js"
 

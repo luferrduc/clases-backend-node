@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { productsFilePath } from "../../utils.js";
+import { productsFilePath } from "../../utils/utils.js";
 import ProductManager from "./products.file.js";
 import { v4 as uuidv4 } from "uuid";
 /*

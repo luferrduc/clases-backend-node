@@ -1,7 +1,7 @@
 import { Router } from "express";
 // import ProductManager from "../dao/fileManagers/product-file.manager.js";
 
-import { productsFilePath } from "../utils.js";
+import { productsFilePath } from "../utils/utils.js";
 import { accessRolesEnum, passportStrategiesEnum } from "../config/enums.js";
 import { handlePolicies } from "../middlewares/auth.js";
 import { passportCall } from "../config/passport.config.js";

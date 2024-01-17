@@ -1,6 +1,6 @@
 import { config } from "dotenv"
 import { Command } from "commander" 
-import { __dirname } from "./utils.js"
+import { __dirname } from "./utils/utils.js"
 import { join } from "node:path"
 
 
@@ -20,6 +20,7 @@ const configs = {
   port: process.env.PORT || 8080,
   mongoUrl: process.env.MONGO_URL,
   persistence: process.env.PERSISTENCE || 'MONGO',
-  privateKeyJWT: process.env.PRIVATE_KEY_JWT
+  privateKeyJWT: process.env.PRIVATE_KEY_JWT,
+  environment
 }
 export default configs

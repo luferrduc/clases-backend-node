@@ -1,4 +1,4 @@
-import { generateToken, createHash, isValidPassowrd } from "../utils.js";
+import { generateToken, createHash, isValidPassowrd } from "../utils/utils.js";
 import { validateUser } from "../schemas/users.schema.js";
 import { login as loginServices } from "../services/sessions.services.js";
 import { showPublicUser as showPublicUserServices } from "../services/sessions.services.js";
