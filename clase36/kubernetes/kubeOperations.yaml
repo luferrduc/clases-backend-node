@@ -7,8 +7,8 @@ spec:
   selector:
     app: kubeoperations
   ports:
-  - port: 8080
-    targetPort: 8080
+    - port: 8080
+      targetPort: 8080
   type: LoadBalancer
 ---
 # Versión del recurso con el que estamos trabajando
@@ -40,10 +40,10 @@ spec:
         image: luferrando0904/docker-kubernetes-55575:1.0.0
         # Puerto que va a estar expuesto para poder llegar a nuestra app
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
         env:
-        - name: MONGO_URL
-          value: http://localhost:5433
+          - name: MONGO_URL
+            value: http://localhost:5433
         # Este atributi especifica la politica de como manejar el pull de la imagen de docker
         # ifNoPresent: solo se hará pull de dockerhub si no está la imagen en nuestro entorno local
         # Always: siempre vamos a hacer pull de la imagen desde dockerhub, no importa si ya está en local
