@@ -2,7 +2,7 @@ import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import local from "passport-local";
 import { passportStrategiesEnum } from "./enums.js";
-import { PRIVATE_KEY_JWT } from "./constants.js";
+import configs from "../config.js";
 
 import usersModel from "../dao/dbManagers/models/users.model.js";
 import jwt from "passport-jwt";
@@ -21,7 +21,7 @@ export const initializePassport = () => {
 		new JWTStrategy(
 			{
 				jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-				secretOrKey: PRIVATE_KEY_JWT
+				secretOrKey: configs.privateKeyJWT
 			},
 			async (jwt_payload, done) => {
 				try {
