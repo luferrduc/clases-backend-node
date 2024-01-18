@@ -59,7 +59,7 @@ export const getProduct = async (req, res) => {
 			return res.sendNotFoundError({
 				name: "Product Error",
 				cause: "Product not found",
-				messagge: `Product with ´id´ '${pid}' doesn't exists`,
+				messagge: `Product with 'id' '${pid}' doesn't exists`,
 				code: EnumErrors.RESORUCE_NOT_FOUND
 			});
 		// if (!product) throw CustomError.createError({

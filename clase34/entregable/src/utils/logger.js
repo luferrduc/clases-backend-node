@@ -2,7 +2,7 @@ import winston from "winston";
 import configs from "../config.js";
 // Ejercicio multientorno
 const ENVIRONMENT = configs.environment;
-console.log(ENVIRONMENT)
+console.log(ENVIRONMENT);
 let logger;
 
 const customLevelOptions = {
@@ -24,6 +24,24 @@ const customLevelOptions = {
 	}
 };
 
+const loggerFormat = winston.format.combine(
+	winston.format.label({
+		label: "[LOGGER]"
+	}),
+	winston.format.timestamp({
+		format: "YYYY-MM-DD HH:mm:ss"
+	}),
+	winston.format.printf((info) => {
+		return `${info.label} [${
+			info.timestamp
+		}] - [${info.level.toUpperCase()}]: ${info.message}`;
+	}),
+	winston.format.colorize({
+		all: true,
+		colors: customLevelOptions.colors
+	})
+);
+
 if (ENVIRONMENT == "PROD") {
 	// prodLogger
 	logger = winston.createLogger({
@@ -31,17 +49,23 @@ if (ENVIRONMENT == "PROD") {
 		transports: [
 			new winston.transports.Console({
 				level: "info",
-				format: winston.format.combine(
-					winston.format.colorize({
-						all: true,
-						colors: customLevelOptions.colors
-					}),
-					winston.format.simple()
-				)
+				format: loggerFormat
 			}),
 			new winston.transports.File({
 				filename: "logs/errors.log",
-				level: "error"
+				level: "error",
+				format: winston.format.combine(
+					winston.format.label({
+						label: "[LOGGER]"
+					}),
+					winston.format.timestamp({
+						format: "YYYY-MM-DD HH:mm:ss"
+					}),
+					winston.format.printf((info) => {
+						return `${info.label} [${
+							info.timestamp
+						}] - [${info.level.toUpperCase()}]: ${info.message}`;
+					}))
 			})
 		]
 	});
@@ -49,49 +73,9 @@ if (ENVIRONMENT == "PROD") {
 	// devLogger
 	logger = winston.createLogger({
 		levels: customLevelOptions.levels,
-		transports: [
-			new winston.transports.Console({
-				level: "debug",
-				format: winston.format.combine(
-					winston.format.colorize({
-						all: true,
-						colors: customLevelOptions.colors
-					}),
-					winston.format.simple()
-				)
-			})
-		]
+		transports: [new winston.transports.Console({ level: "debug", format: loggerFormat })]
 	});
 }
-
-// crear nuestro logger, donde vamos a definir nuestro transporte
-// const logger = winston.createLogger({
-//   transports: [
-//     new winston.transports.Console({
-//       level: 'info'
-//     }),
-//     new winston.transports.File({
-//       filename: 'logs/dev.log',
-//       level: 'warn'
-//     })
-//   ]
-// })
-
-// const logger = winston.createLogger({
-// 	levels: customLevelOptions.levels,
-// 	transports: [
-// 		new winston.transports.Console({
-// 			level: "debug",
-//       format: winston.format.combine(
-//         winston.format.colorize({
-//           all: true,
-//           colors: customLevelOptions.colors
-//         }),
-//         winston.format.simple()
-//       )
-// 		})
-// 	]
-// });
 
 export const addLogger = (req, res, next) => {
 	req.logger = logger;
