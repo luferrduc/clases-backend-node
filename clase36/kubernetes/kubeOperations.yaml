@@ -1,0 +1,51 @@
+# Definir la configuración de nuestro balanceador de carga
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeservice
+spec:
+  selector:
+    app: kubeoperations
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: LoadBalancer
+---
+# Versión del recurso con el que estamos trabajando
+apiVersion: apps/v1
+# El tipo de recurso, está enfocado en nuestros contenedores
+kind: Deployment
+# El nombre con el cual será reconocida nuestra app. Este nombre aparecerá
+# como prefijo de cada pod
+metadata:
+  name: kubeoperations
+# Especificaciones: describe lo que quremos que se implemente con este recurso
+spec:
+  # El siguiente atributi define el número de pods que se generará en nuestro cluster de Kubernetes
+  replicas: 5
+  # El siguiente atributo hace referencia para seleccionar nuestras instancias
+  selector:
+    matchLabels:
+      app: kubeoperations
+  # La plant6illa de nuestro pod, de manera que aquí vamos a describir los detalles que contendrá nuestro pod
+  template:
+    metadata:
+      labels:
+        app: kubeoperations
+    # Especificaciones de nuestro pod
+    spec:
+      # Aquí definimos las caracteristicas de nuestros contenedores que va a
+      containers:
+      - name: kubecontainer
+        image: luferrando0904/docker-kubernetes-55575:1.0.0
+        # Puerto que va a estar expuesto para poder llegar a nuestra app
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_URL
+          value: http://localhost:5433
+        # Este atributi especifica la politica de como manejar el pull de la imagen de docker
+        # ifNoPresent: solo se hará pull de dockerhub si no está la imagen en nuestro entorno local
+        # Always: siempre vamos a hacer pull de la imagen desde dockerhub, no importa si ya está en local
+        # Never: nunca vamos a hacer pull de dockerhub, forzando a que la imagen debe estar si o si en local
+        imagePullPolicy: Always
