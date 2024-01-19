@@ -37,7 +37,7 @@ spec:
       # Aquí definimos las caracteristicas de nuestros contenedores que va a
       containers:
       - name: kubecontainer
-        image: luferrando0904/docker-kubernetes-55575:1.0.0
+        image: luferrando0904/docker-kubernetes-55575:1.0.1
         # Puerto que va a estar expuesto para poder llegar a nuestra app
         ports:
           - containerPort: 8080
