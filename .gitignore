@@ -1,9 +1,15 @@
 node_modules
 /clase27/entregable/.env.development
 /clase27/entregable/.env.production
+
 /clase32/entregable/.env.development
 /clase32/entregable/.env.production
+
 /clase34/entregable/.env.development
 /clase34/entregable/.env.production
+
+/clase37/terceraPracticaIntegradora/.env.production
+/clase37/terceraPracticaIntegradora/.env.development
+
 pnpm-lock.yaml
 package-lock.json
