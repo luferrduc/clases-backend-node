@@ -1,7 +1,7 @@
 // import Users from "../dao/dbManagers/users.manager.js";
 import { Users as UsersDao } from "../dao/factory.js"
 import UsersRepository from "../repositories/users.repository.js"
-import { createHash, isValidPassowrd } from "../utils/utils.js";
+import { createHash, isValidPassowrd } from "../utils.js";
 
 const usersDao = new UsersDao()
 const userRepository = new UsersRepository(usersDao)

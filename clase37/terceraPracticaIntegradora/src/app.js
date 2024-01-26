@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
-import { __dirname } from "./utils/utils.js";
+import { __dirname } from "./utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
@@ -79,7 +79,7 @@ app.get("/api/loggerTest", (req, res) => {
 });
 app.use("/", ViewsRouter);
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.use((req, res) => {
 	res.status(404).send({ status: "error", message: "404 not found" });

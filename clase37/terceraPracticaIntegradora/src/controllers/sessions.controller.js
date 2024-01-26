@@ -1,4 +1,4 @@
-import { generateToken, createHash, isValidPassowrd } from "../utils/utils.js";
+import { generateToken, createHash, isValidPassowrd } from "../utils.js";
 import { validateUser } from "../schemas/users.schema.js";
 import { login as loginServices } from "../services/sessions.services.js";
 import { showPublicUser as showPublicUserServices } from "../services/sessions.services.js";
@@ -110,4 +110,8 @@ export const getCartByUser = async (req, res) => {
 		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	} 
+}
+
+export const resetPassword = async (req, res) => {
+	
 }

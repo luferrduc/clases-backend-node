@@ -6,7 +6,7 @@ import configs from "../config.js";
 
 import usersModel from "../dao/dbManagers/models/users.model.js";
 import jwt from "passport-jwt";
-import { createHash, isValidPassowrd } from "../utils/utils.js";
+import { createHash, isValidPassowrd } from "../utils.js";
 import { addLogger } from "../utils/logger.js";
 
 // local es autenticación con usuario y contraseña

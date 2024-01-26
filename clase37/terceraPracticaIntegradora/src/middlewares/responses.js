@@ -8,23 +8,22 @@ export const generateCustomResponse = (req, res, next) => {
   res.sendSuccessNewResource = (data) => {
     return res.status(201).json({ status: "success", ...data });
   };
-  res.sendClientError = ({name = "Error", cause, messagge, code = 7}) => {
+  res.sendClientError = (error) => {
     return res.status(400).json({ status: "error", message: error });
   };
-  res.sendAuthError = ([name = "Error", cause, messagge, code = 7]) => {
+  res.sendAuthError = (error) => {
     return res.status(401).json({ status: "error", message: error });
   };
-  res.sendPermissionsError = ({name = "Error", cause, messagge, code = 7}) => {
+  res.sendPermissionsError = (error) => {
     return res.status(403).json({ status: "error", message: error });
   };
-  res.sendNotFoundError = ({name = "Error", cause, messagge, code = 7}) => {
-    throw CustomError.createError({name,cause,messagge,code })
+  res.sendNotFoundError = (error) => {
     return res.status(404).json({ status: "error", message: error });
   }
-  res.sendUnproccesableEntity = ({name = "Error", cause, messagge, code = 7}) => {
+  res.sendUnproccesableEntity = (error) => {
     return res.status(422).json({ status: "error", message: error })
   }
-  res.sendServerError = ({name = "Error", cause, messagge, code = 7}) => {
+  res.sendServerError = (error) => {
     return res.status(500).json({ status: "error", message: error });
   };
   next();

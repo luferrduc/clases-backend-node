@@ -10,7 +10,8 @@ import {
 	githubCallback,
 	logout,
 	register,
-	getCartByUser
+	getCartByUser,
+	resetPassword
 } from "../controllers/sessions.controller.js";
 
 const router = Router();
@@ -29,6 +30,13 @@ router
 		handlePolicies([accessRolesEnum.PUBLIC]),
 		generateCustomResponse,
 		register
+	)
+	.post(
+		"reset-password",
+		passportCall(passportStrategiesEnum.JWT),
+		handlePolicies([accessRolesEnum.USER, accessRolesEnum.ADMIN]),
+		generateCustomResponse,
+		resetPassword
 	)
 	.get(
 		"/logout",

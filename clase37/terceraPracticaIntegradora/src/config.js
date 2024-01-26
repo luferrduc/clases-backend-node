@@ -1,6 +1,6 @@
 import { config } from "dotenv"
 import { Command } from "commander" 
-import { __dirname } from "./utils/utils.js"
+import { __dirname } from "./utils.js"
 import { join } from "node:path"
 
 
