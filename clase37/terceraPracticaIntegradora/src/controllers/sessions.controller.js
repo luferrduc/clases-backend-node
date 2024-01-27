@@ -126,7 +126,8 @@ export const passwordLink = async (req, res) => {
 			}
 			const token = generateToken(newUser, "1h")
 			const result = passwordLinkServices(newUser, token)
-
+			
+			// TODO: retornar el response correspondiente
 		}
 
 	} catch (error) {

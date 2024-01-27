@@ -163,11 +163,11 @@ export const resetPasswordView = (req, res) => {
 	try {
 		const token = req.query.token;
 		const PRIVATE_KEY = configs.privateKeyJWT;
-
+		// TODO: revisar token y renderizar página correspondiente
 		res.render("resetPassword", {
 			style: "resetPassword.css"
 		});
 	} catch (error) {
-		
+
 	}
 };

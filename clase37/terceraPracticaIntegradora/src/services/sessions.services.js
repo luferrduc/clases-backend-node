@@ -44,6 +44,7 @@ export const passwordLink = async (user, token) => {
     subject: "Password Reset",
     html
   }
+  // TODO: Retornar respuesta del envio del email
   const sentMail = await sendEmail(email)
   
 }
