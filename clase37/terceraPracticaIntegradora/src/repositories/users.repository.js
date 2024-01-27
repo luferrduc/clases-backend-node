@@ -30,4 +30,9 @@ export default class UsersRepository {
 		const result = await this.dao.deleteCartFromUser(email);
 		return result;
 	};
+
+	updatePassword = async (email, password) => {
+		const result = await this.dao.updatePassword(email, password)
+		return result
+	}
 }

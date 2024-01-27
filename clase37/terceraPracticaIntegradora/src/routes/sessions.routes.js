@@ -11,7 +11,8 @@ import {
 	logout,
 	register,
 	getCartByUser,
-	passwordLink
+	passwordLink,
+	passwordChange
 } from "../controllers/sessions.controller.js";
 
 const router = Router();
@@ -67,6 +68,13 @@ router
 		handlePolicies([accessRolesEnum.USER]),
 		generateCustomResponse,
 		getCartByUser
+	)
+	.put(
+		"/password-change",
+		passportCall(passportStrategiesEnum.NOTHING),
+		handlePolicies([accessRolesEnum.PUBLIC]),
+		generateCustomResponse,
+		passwordChange
 	);
 
 export default router;

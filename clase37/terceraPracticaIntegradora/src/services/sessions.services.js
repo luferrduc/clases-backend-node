@@ -41,10 +41,17 @@ export const passwordLink = async (user, token) => {
   const html = resetPasswordEmail(`${user.first_name} ${user.last_name}`, token)
   const email = {
     to: user.email,
-    subject: "Password Reset",
+    subject: "Password Reset Link",
     html
   }
   // TODO: Retornar respuesta del envio del email
   const sentMail = await sendEmail(email)
-  
+  return sentMail
+}
+
+export const updatePassword = async (email, password) => {
+  const newPassword = createHash(password)
+  const result = await userRepository.updatePassword(email, newPassword)
+
+  return result
 }

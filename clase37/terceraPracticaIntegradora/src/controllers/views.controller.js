@@ -159,15 +159,33 @@ export const profile = (req, res) => {
 	});
 };
 
-export const resetPasswordView = (req, res) => {
+export const passwordLinkView = async (req, res) => {
+	try {
+
+		res.render("passwordLink", {
+			style: "passwordLink.css"
+		});
+	} catch (error) {}
+};
+
+export const resetPasswordView = async (req, res) => {
 	try {
 		const token = req.query.token;
 		const PRIVATE_KEY = configs.privateKeyJWT;
 		// TODO: revisar token y renderizar página correspondiente
-		res.render("resetPassword", {
-			style: "resetPassword.css"
+		console.log(token)
+		jwt.verify(token, PRIVATE_KEY, (error, decoded) => { 
+			// TODO: Si existe error, renderizar o rediregir a otra página
+			if(error) return res.render("500", {
+				style: "500.css",
+				error
+			})
+			// TODO: Si no, renderizar página de cambio de contraseña
+			console.log(decoded)
+			return res.render("passwordChange", {
+				email: decoded.user.email,
+				style: "passwordChange.css"
+			})
 		});
-	} catch (error) {
-
-	}
+	} catch (error) {}
 };

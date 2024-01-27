@@ -12,7 +12,8 @@ import {
 	profile,
 	realTimeProductsView,
 	register,
-	resetPasswordView
+	resetPasswordView,
+	passwordLinkView
 } from "../controllers/views.controller.js";
 
 const router = Router();
@@ -73,6 +74,13 @@ router
 		handlePolicies([accessRolesEnum.PUBLIC]),
 		generateCustomResponse,
 		login
+	)
+	.get(
+		"/password-link",
+		passportCall(passportStrategiesEnum.NOTHING),
+		handlePolicies([accessRolesEnum.PUBLIC]),
+		generateCustomResponse,
+		passwordLinkView
 	)
 	.get(
 		"/reset-password",

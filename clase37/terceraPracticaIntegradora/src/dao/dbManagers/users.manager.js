@@ -42,4 +42,10 @@ export default class Users {
 		}
 		return user;
 	};
+
+	updatePassword = async (email, password) => {
+		const newUser = await usersModel.findOneAndUpdate({ email }, { password });
+		return newUser
+	}
+
 }

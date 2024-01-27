@@ -6,8 +6,8 @@ import { addCartToUser as addCartToUserServices } from "../services/sessions.ser
 import { logout as logoutServices } from "../services/sessions.services.js";
 import { register as registerServices } from "../services/sessions.services.js";
 import { passwordLink as passwordLinkServices } from "../services/sessions.services.js";
+import { updatePassword as updatePasswordServices} from "../services/sessions.services.js"
 import { createCart as createCartServices } from "../services/carts.services.js";
-
 
 
 export const login = async (req, res) => {
@@ -32,21 +32,20 @@ export const login = async (req, res) => {
 			return res.sendSuccess(accessToken);
 		}
 		let user = await loginServices(email);
-		if(!user) return res.sendAuthError("incorrect credentials")
+		if (!user) return res.sendAuthError("incorrect credentials");
 
 		const comparePassword = isValidPassowrd(password, user.password);
 
-		if(!comparePassword) return res.sendAuthError("incorrect credentials")
+		if (!comparePassword) return res.sendAuthError("incorrect credentials");
 
-		let cartId
-		
-		if(!user.cart){
-			cartId = await createCartServices()
-			user = await addCartToUserServices(user, cartId)
+		let cartId;
+
+		if (!user.cart) {
+			cartId = await createCartServices();
+			user = await addCartToUserServices(user, cartId);
 		}
-		
-		
-		const publicUser = await showPublicUserServices(user)
+
+		const publicUser = await showPublicUserServices(user);
 		// publicUser.cart = cartId
 
 		const accessToken = generateToken(publicUser);
@@ -69,10 +68,10 @@ export const register = async (req, res) => {
 		const user = resultUser.data;
 
 		const existsUser = await loginServices(user.email);
-		if(existsUser) return res.sendClientError( "user already exists")
+		if (existsUser) return res.sendClientError("user already exists");
 
-		const registeredUser = await registerServices(user)
-		return res.sendSuccessNewResource({ payload: registeredUser});
+		const registeredUser = await registerServices(user);
+		return res.sendSuccessNewResource({ payload: registeredUser });
 	} catch (error) {
 		return res.sendServerError(error.message);
 	}
@@ -104,34 +103,60 @@ export const githubCallback = async (req, res) => {
 
 export const getCartByUser = async (req, res) => {
 	try {
-		const { cart: userCart } = req.user
-		const { _id: cid } = userCart
-		
-		if(cid) return res.send({ status: "success", payload: {_id: cid}  })
-	} catch (error) {
-		req.logger.error(`${error.message}`);
-		return res.sendServerError(error.message);
-	} 
-}
+		const { cart: userCart } = req.user;
+		const { _id: cid } = userCart;
 
-export const passwordLink = async (req, res) => {
-	try {
-		const { email } = req.body
-		const user = await loginServices(email)
-		if(user) {
-			const newUser = {
-				first_name: user.first_name,
-				last_name: user.last_name,
-				email
-			}
-			const token = generateToken(newUser, "1h")
-			const result = passwordLinkServices(newUser, token)
-			
-			// TODO: retornar el response correspondiente
-		}
-
+		if (cid) return res.send({ status: "success", payload: { _id: cid } });
 	} catch (error) {
 		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
-}
+};
+
+export const passwordLink = async (req, res) => {
+	try {
+		const { email } = req.body;
+		const user = await loginServices(email);
+		if (user) {
+			const newUser = {
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email
+			};
+			const token = generateToken(newUser, "1h");
+			const result = await passwordLinkServices(newUser, token);
+			if(!result.messageId){
+				req.logger.error("Error al enviar email")
+				return res.redirect("/login")
+			}
+			// TODO: retornar el response correspondiente
+			return res.sendSuccess("Email was sent successfully")
+		}
+	} catch (error) {
+		req.logger.error(`${error.message}`);
+		return res.sendServerError(error.message);
+	}
+};
+
+export const passwordChange = async (req, res) => {
+	try {
+		const data = req.body
+		const { password, email } = data
+
+		const user = await loginServices(email);
+		if(!user){
+			req.logger.error(`User with email ${user.email} doesn't exists`);
+			return res.sendUnproccesableEntity(`User with email ${user.email} doesn't exists`)
+		} 
+		const newUser = await updatePasswordServices(email, password)
+		if(!newUser){
+			req.logger.error(`User with email ${user.email} doesn't exists`);
+			return res.sendUnproccesableEntity(`Password cannot be changed`)
+		}
+
+		return res.sendSuccess('Password has been changed successfully')
+	} catch (error) {
+		req.logger.error(`${error.message}`);
+		return res.sendServerError(error.message);
+	}
+};
