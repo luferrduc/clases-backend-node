@@ -85,9 +85,9 @@ export const resetPasswordEmail = (name, token) => {
         <h2>Restablecimiento de Contraseña</h2>
         <p>Hola ${name},</p>
         <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Haz click en el siguiente enlace para completar el proceso:</p>
-        <a class="btn" href="/reset-password?token=${token}">Restablecer Contraseña</a>
+        <a class="btn" href="http://localhost:8080/reset-password?token=${token}">Restablecer Contraseña</a>
         <p>Si no solicitaste restablecer la contraseña, puedes ignorar este correo electrónico.</p>
-        <p>Gracias,<br>El Equipo de [Tu Empresa]</p>
+        <p>Gracias,<br>El Equipo de Coder55575</p>
     </div>
 </body>
 </html>

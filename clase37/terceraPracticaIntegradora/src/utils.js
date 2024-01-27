@@ -22,9 +22,9 @@ export const isValidPassowrd = (plainPassword, hashedPassword) => {
 	return result;
 };
 
-export const generateToken = (user) => {
+export const generateToken = (user, expires = "24h") => {
 	// console.log({userToken: user})
-	const token = jwt.sign({ user }, configs.privateKeyJWT, { expiresIn: "24h" });
+	const token = jwt.sign({ user }, configs.privateKeyJWT, { expiresIn: expires });
 	return token;
 };
 

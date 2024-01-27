@@ -11,7 +11,7 @@ import {
 	logout,
 	register,
 	getCartByUser,
-	resetPassword
+	passwordLink
 } from "../controllers/sessions.controller.js";
 
 const router = Router();
@@ -32,11 +32,11 @@ router
 		register
 	)
 	.post(
-		"reset-password",
-		passportCall(passportStrategiesEnum.JWT),
-		handlePolicies([accessRolesEnum.USER, accessRolesEnum.ADMIN]),
+		"/password-link",
+		passportCall(passportStrategiesEnum.NOTHING),
+		handlePolicies([accessRolesEnum.PUBLIC]),
 		generateCustomResponse,
-		resetPassword
+		passwordLink
 	)
 	.get(
 		"/logout",

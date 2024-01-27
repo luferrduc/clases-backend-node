@@ -5,7 +5,9 @@ import { showPublicUser as showPublicUserServices } from "../services/sessions.s
 import { addCartToUser as addCartToUserServices } from "../services/sessions.services.js";
 import { logout as logoutServices } from "../services/sessions.services.js";
 import { register as registerServices } from "../services/sessions.services.js";
+import { passwordLink as passwordLinkServices } from "../services/sessions.services.js";
 import { createCart as createCartServices } from "../services/carts.services.js";
+
 
 
 export const login = async (req, res) => {
@@ -112,6 +114,23 @@ export const getCartByUser = async (req, res) => {
 	} 
 }
 
-export const resetPassword = async (req, res) => {
-	
+export const passwordLink = async (req, res) => {
+	try {
+		const { email } = req.body
+		const user = await loginServices(email)
+		if(user) {
+			const newUser = {
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email
+			}
+			const token = generateToken(newUser, "1h")
+			const result = passwordLinkServices(newUser, token)
+
+		}
+
+	} catch (error) {
+		req.logger.error(`${error.message}`);
+		return res.sendServerError(error.message);
+	}
 }

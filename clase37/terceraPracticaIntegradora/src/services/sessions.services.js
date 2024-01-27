@@ -2,6 +2,8 @@
 import { Users as UsersDao } from "../dao/factory.js"
 import UsersRepository from "../repositories/users.repository.js"
 import { createHash, isValidPassowrd } from "../utils.js";
+import { sendEmail } from "./mail.services.js";
+import { resetPasswordEmail } from "../utils/custom.html.js";
 
 const usersDao = new UsersDao()
 const userRepository = new UsersRepository(usersDao)
@@ -34,3 +36,14 @@ export const logout = async (email) => {
   return result
 }
 
+export const passwordLink = async (user, token) => {
+
+  const html = resetPasswordEmail(`${user.first_name} ${user.last_name}`, token)
+  const email = {
+    to: user.email,
+    subject: "Password Reset",
+    html
+  }
+  const sentMail = await sendEmail(email)
+  
+}

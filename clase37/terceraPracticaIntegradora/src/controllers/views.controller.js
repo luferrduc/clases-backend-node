@@ -1,6 +1,8 @@
 import Products from "../dao/dbManagers/products.manager.js";
 import Carts from "../dao/dbManagers/carts.manager.js";
 import Messages from "../dao/dbManagers/messages.manager.js";
+import jwt from "jsonwebtoken";
+import configs from "../config.js";
 
 const productsManager = new Products();
 const cartsManager = new Carts();
@@ -158,7 +160,14 @@ export const profile = (req, res) => {
 };
 
 export const resetPasswordView = (req, res) => {
-	res.render("resetPassword", {
-		style: "resetPassword.css"
-	});
+	try {
+		const token = req.query.token;
+		const PRIVATE_KEY = configs.privateKeyJWT;
+
+		res.render("resetPassword", {
+			style: "resetPassword.css"
+		});
+	} catch (error) {
+		
+	}
 };
