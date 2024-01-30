@@ -107,6 +107,8 @@ export const updateProduct = async (req, res) => {
 			page: 1,
 			query: {}
 		};
+
+		const user = req.user
 		const io = req.app.get("socketio");
 		const result = validateProduct(req.body);
 		if (result.error) return res.sendClientError(result.error);
@@ -116,7 +118,7 @@ export const updateProduct = async (req, res) => {
 		if (!productExists)
 			return res.sendNotFoundError("Product not found, incorrect id");
 
-		const productUpdated = await updateProductServices(pid, result.data);
+		const productUpdated = await updateProductServices(pid, result.data, user);
 		const { products: productsEmit } = await getProductsServices(options);
 		io.emit("refreshProducts", productsEmit);
 
@@ -134,14 +136,14 @@ export const deleteProduct = async (req, res) => {
 			page: 1,
 			query: {}
 		};
-
+		const user = req.user
 		const io = req.app.get("socketio");
 
 		const productExists = await getProduct(pid);
 		if (!productExists)
 			return res.sendNotFoundError("Product not found, incorrect id");
 
-		const deletedProduct = await deleteProductServices(pid);
+		const deletedProduct = await deleteProductServices(pid, user);
 		const { products: productsEmit } = await getProductsServices(options);
 		io.emit("refreshProducts", productsEmit);
 		return res.sendSuccess("Product deleted succesfully");

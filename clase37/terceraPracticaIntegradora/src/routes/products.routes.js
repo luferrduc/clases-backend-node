@@ -40,7 +40,7 @@ router
 	.post(
 		"/",
 		passportCall(passportStrategiesEnum.JWT),
-		handlePolicies([accessRolesEnum.USER]),
+		handlePolicies([accessRolesEnum.USER, accessRolesEnum.PREMIUM]),
 		generateCustomResponse,
 		createProduct
 	)

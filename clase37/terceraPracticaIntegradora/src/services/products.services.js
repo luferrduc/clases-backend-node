@@ -63,8 +63,6 @@ export const getProduct = async (pid) => {
 };
 
 export const createProduct = async (product, user) => {
-
-	if(user.role != "premium") throw new InvalidOwnerError("Only premium users can create products")
 	const result = await productsRepository.create(product)
 	return result
 };
@@ -74,7 +72,12 @@ export const updateProduct = async (pid, product) => {
 	return updatedProduct
 };
 
-export const deleteProduct = async (pid) => {
+export const deleteProduct = async (pid, user) => {
+	const product = await productsRepository.getById(pid)
+
+	if(user.role === "premium" && user.email != product.owner){
+			throw new InvalidOwnerError("Premium user can only update their products")
+	}
 	const deletedProduct = await productsRepository.delete(pid);
 	return deletedProduct
 };

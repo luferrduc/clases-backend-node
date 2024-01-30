@@ -10,6 +10,11 @@ export default class UsersRepository {
 		return user;
 	};
 
+	getById = async (uid) => {
+		const user = await this.dao.getById(uid)
+		return user
+	}
+
   showPublicUser = async (user) => {
     const finalUser = new UsersDto(user)
     return finalUser
@@ -33,6 +38,11 @@ export default class UsersRepository {
 
 	updatePassword = async (email, password) => {
 		const result = await this.dao.updatePassword(email, password)
+		return result
+	}
+
+	changeRole = async (uid, role) => {
+		const result = await this.dao.changeRole(uid, role)
 		return result
 	}
 }
