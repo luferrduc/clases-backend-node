@@ -102,20 +102,20 @@ components:
       type: Object
       properties:
         first_name:
-            type: String
-            description: Nombre del usuario
-          last_name:
-            type: String
-            description: Apellido del usuario
-          email:
-            type: String
-            description: Correo electrónico del usuario
-          password:
-            type: String
-            description: Password del usuario
-          rol:
-            type: String
-            description: Rol del usuario
+          type: String
+          description: Nombre del usuario
+        last_name:
+          type: String
+          description: Apellido del usuario
+        email:
+          type: String
+          description: Correo electrónico del usuario
+        password:
+          type: String
+          description: Password del usuario
+        rol:
+          type: String
+          description: Rol del usuario
       example:       
         first_name: Coder
         last_name: House
