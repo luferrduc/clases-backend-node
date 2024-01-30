@@ -58,14 +58,14 @@ export const getProducts = async (options, sort, queryP, queryValue) => {
 };
 
 export const getProduct = async (pid) => {
-	const product = productsRepository.getById(pid)
+	const product = await productsRepository.getById(pid)
 	return product
 };
 
 export const createProduct = async (product, user) => {
 
 	if(user.role != "premium") throw new InvalidOwnerError("Only premium users can create products")
-	const result = productsRepository.create(product)
+	const result = await productsRepository.create(product)
 	return result
 };
 
