@@ -4,6 +4,7 @@ import UsersRepository from "../repositories/users.repository.js"
 import { createHash, isValidPassowrd } from "../utils.js";
 import { sendEmail } from "./mail.services.js";
 import { resetPasswordEmail } from "../utils/custom.html.js";
+import { PasswordIsNotValidError } from "../utils/custom.exceptions.js";
 
 const usersDao = new UsersDao()
 const userRepository = new UsersRepository(usersDao)
@@ -49,9 +50,15 @@ export const passwordLink = async (user, token) => {
   return sentMail
 }
 
-export const updatePassword = async (email, password) => {
-  const newPassword = createHash(password)
-  const result = await userRepository.updatePassword(email, newPassword)
+export const updatePassword = async (email, user, newPassword) => {
+
+  const { password } = user
+  const isValid = isValidPassowrd(newPassword, password)
+  
+  if(!isValid) throw new PasswordIsNotValidError("You must use a password different from the previous one")
+
+  const newHashedPassword = createHash(newPassword)
+  const result = await userRepository.updatePassword(email, newHashedPassword)
 
   return result
 }

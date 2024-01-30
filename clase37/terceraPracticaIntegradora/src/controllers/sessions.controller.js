@@ -148,7 +148,9 @@ export const passwordChange = async (req, res) => {
 			req.logger.error(`User with email ${user.email} doesn't exists`);
 			return res.sendUnproccesableEntity(`User with email ${user.email} doesn't exists`)
 		} 
-		const newUser = await updatePasswordServices(email, password)
+
+		
+		const newUser = await updatePasswordServices(email, user, password)
 		if(!newUser){
 			req.logger.error(`User with email ${user.email} doesn't exists`);
 			return res.sendUnproccesableEntity(`Password cannot be changed`)
