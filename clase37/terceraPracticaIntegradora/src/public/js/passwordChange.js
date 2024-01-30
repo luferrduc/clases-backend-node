@@ -34,9 +34,12 @@ passwordChangeForm.addEventListener("submit", function (event) {
 			if (result.status === 200) {
 				alert("La contraseña fue cambiada correctamente");
 				window.location.href = `http://localhost:8080/login`;
-			}else{
-				alert("Hubo un error, intenta nuevamente");
-      }
+			} else if(result.status === 422){
+				alert("La contraseña debe ser diferente a la anterior")
+			} else {
+				alert("Hubo un error, intenta nuevamente")
+			}
+			
 		});
 	}
 });

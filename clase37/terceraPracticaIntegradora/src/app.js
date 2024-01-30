@@ -10,7 +10,6 @@ import { __dirname } from "./utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
-import errorHandler from "./middlewares/errors/index.js";
 import { addLogger } from "./utils/logger.js";
 
 // Import Routes
@@ -24,15 +23,6 @@ import MessageManager from "./dao/dbManagers/messages.manager.js";
 
 const app = express();
 const PORT = configs.port;
-
-// Database
-// try {
-//   await mongoose.connect(configs.mongoUrl)
-//   console.log("Database connected")
-// } catch (error) {
-//   console.log(error.message)
-//   mongoose.disconnect()
-// }
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
@@ -78,8 +68,6 @@ app.get("/api/loggerTest", (req, res) => {
   res.send({ status: "success", message: "Logger tested successfully"})
 });
 app.use("/", ViewsRouter);
-
-// app.use(errorHandler);
 
 app.use((req, res) => {
 	res.status(404).send({ status: "error", message: "404 not found" });

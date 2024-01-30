@@ -8,6 +8,7 @@ import { register as registerServices } from "../services/sessions.services.js";
 import { passwordLink as passwordLinkServices } from "../services/sessions.services.js";
 import { updatePassword as updatePasswordServices} from "../services/sessions.services.js"
 import { createCart as createCartServices } from "../services/carts.services.js";
+import { PasswordIsNotValidError } from "../utils/custom.exceptions.js";
 
 
 export const login = async (req, res) => {
@@ -158,6 +159,10 @@ export const passwordChange = async (req, res) => {
 
 		return res.sendSuccess('Password has been changed successfully')
 	} catch (error) {
+		console.log(error)
+		if(error instanceof PasswordIsNotValidError){
+			return res.sendUnproccesableEntity(error.message)
+		}
 		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);
 	}
