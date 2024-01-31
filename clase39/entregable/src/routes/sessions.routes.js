@@ -10,8 +10,8 @@ import {
 	githubCallback,
 	logout,
 	register,
-	getCartByUser,
 	passwordLink,
+	getCartByUser,
 	passwordChange,
 	changeRoleUser
 } from "../controllers/sessions.controller.js";

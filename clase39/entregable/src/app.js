@@ -11,6 +11,7 @@ import swaggerUiExpress from 'swagger-ui-express'
 
 
 import { __dirname } from "./utils.js";
+import { __mainDirname } from "./utils.js"
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
 import passport from "passport";
@@ -32,14 +33,15 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.1',
     info: {
-      title: 'Documentación del proyecto de adopción de mascotas',
-      description: 'API pensada en resolver el proceso de adopción de mascotas'
+      title: 'Documentación del proyecto API de ecommerce',
+      description: 'API pensada en resolver el proceso de compras y ventas de productos en una plataforma ecommerce'
     }
   },
-  apis: [`${__dirname}/docs/**/*.yaml`]
+  apis: [`${__mainDirname}/docs/**/*.yaml`]
 }
 
 const specs = swaggerJsdoc(swaggerOptions)
+app.use('/api/docs/', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
@@ -64,7 +66,6 @@ app.use(
 		saveUninitialized: true
 	})
 );
-app.use('/api/docs/', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 // Passport config
 initializePassport();
