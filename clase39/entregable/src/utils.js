@@ -7,6 +7,7 @@ import configs from "./config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
+console.log(__dirname)
 
 export const productsFilePath = join(__dirname, "./files/productos.json");
 export const cartsFilePath = join(__dirname, "./files/carts.json");
@@ -23,7 +24,6 @@ export const isValidPassowrd = (plainPassword, hashedPassword) => {
 };
 
 export const generateToken = (user, expires = "24h") => {
-	// console.log({userToken: user})
 	const token = jwt.sign({ user }, configs.privateKeyJWT, { expiresIn: expires });
 	return token;
 };

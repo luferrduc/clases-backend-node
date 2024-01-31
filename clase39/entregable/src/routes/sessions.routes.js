@@ -13,7 +13,7 @@ import {
 	getCartByUser,
 	passwordLink,
 	passwordChange,
-	changeRolUser
+	changeRoleUser
 } from "../controllers/sessions.controller.js";
 
 const router = Router();
@@ -82,7 +82,7 @@ router
 		passportCall(passportStrategiesEnum.JWT),
 		handlePolicies([accessRolesEnum.USER, accessRolesEnum.PREMIUM, accessRolesEnum.ADMIN]),
 		generateCustomResponse,
-		changeRolUser
+		changeRoleUser
 	);
 
 export default router;

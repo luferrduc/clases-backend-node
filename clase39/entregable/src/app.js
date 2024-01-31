@@ -6,6 +6,10 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUiExpress from 'swagger-ui-express'
+
+
 import { __dirname } from "./utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
@@ -23,6 +27,19 @@ import MessageManager from "./dao/dbManagers/messages.manager.js";
 
 const app = express();
 const PORT = configs.port;
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.1',
+    info: {
+      title: 'Documentación del proyecto de adopción de mascotas',
+      description: 'API pensada en resolver el proceso de adopción de mascotas'
+    }
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJsdoc(swaggerOptions)
 
 // Engine Config
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
@@ -47,6 +64,7 @@ app.use(
 		saveUninitialized: true
 	})
 );
+app.use('/api/docs/', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 // Passport config
 initializePassport();
