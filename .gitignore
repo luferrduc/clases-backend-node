@@ -11,5 +11,8 @@ node_modules
 /clase37/terceraPracticaIntegradora/.env.production
 /clase37/terceraPracticaIntegradora/.env.development
 
+.env.development
+.env.production
+
 pnpm-lock.yaml
 package-lock.json
