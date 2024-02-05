@@ -7,11 +7,70 @@ paths:
 # ----------------------------------------  
   /api/carts/:
     post:
-      summary: asd
+      summary: Servicio que nos permite crear un carrito vacío
       tags:
         - Carts
       security:
-        - bearerAuth: []             
+        - bearerAuth: []
+      responses:
+        "201":
+          description: Cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    description: success
+                    example: success
+                  payload:                 
+                    $ref: '#components/schemas/Cart'   
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"
+        "404":
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: Cart not found
+        "500":
+          description: Error interno del servidor, usualmente generardo por una query defectuosa o un fallo en la conexión a la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: Mensaje de error del servidor          
 # ----------------------------------------
   /api/carts/{cid}:
     get:
@@ -72,7 +131,20 @@ paths:
                     description: Mensaje para el tipo de error
                     example: Cart not found
         "500":
-          description: Server Error
+          description: Error interno del servidor, usualmente generardo por una query defectuosa o un fallo en la conexión a la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: Mensaje de error del servidor    
     put:
       summary: Este servicio actualiza un carrito a partir de su uuid (identificador único autogenerado) 
       tags:
@@ -113,7 +185,22 @@ paths:
                   payload:  
                     type: string              
                     description: Mensaje para el tipo de error
-                    example: "Error: no auth token"                
+                    example: "Error: no auth token"     
+        "500":
+          description: Error interno del servidor, usualmente generardo por una query defectuosa o un fallo en la conexión a la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: Mensaje de error del servidor                  
     delete:
       summary: Este servicio elimina un carrito de compras a partir de su uuid (identificador único autogenerado)
       tags: 
@@ -148,7 +235,20 @@ paths:
         "404":
           description: Cart not found, incorrect id
         "500":
-          description: Server error
+          description: Error interno del servidor, usualmente generardo por una query defectuosa o un fallo en la conexión a la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: Mensaje de error del servidor    
 # ----------------------------------------
   /api/carts/{cid}/products/{pid}:
     post:
@@ -191,7 +291,22 @@ paths:
                   payload:  
                     type: string              
                     description: Mensaje para el tipo de error
-                    example: "Error: no auth token"                
+                    example: "Error: no auth token"  
+        "404": # TODO: Agregar un oneOf para los errores --> Cart or Product not found
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: Cart not found                                  
     put:
       summary: Este servicio obtiene un carrito a partir de su uuid (identificador único autogenerado) 
       tags:
@@ -324,7 +439,7 @@ components:
           default: "[]"     
       example:
         _id: ObjectId('asdsadA8-nyhaYvb7-Jgdjsad9-jajhsd')
-        products: [{product: ObjectId('653c386cd064ad5e27ae5778'), quantity: 2}, {product: ObjectId('653c3881d064ad5e27ae5781'), quantity: 5}]
+        products: []
   requestBodies:
     updateCart:
       type: object
@@ -346,7 +461,7 @@ components:
           default: []       
       example:
         _id: ObjectId('asdsadA8-nyhaYvb7-Jgdjsad9-jajhsd')
-        products: "[]"
+        products: [{product: ObjectId('653c386cd064ad5e27ae5778'), quantity: 2}, {product: ObjectId('653c3881d064ad5e27ae5781'), quantity: 5}]
 
   securitySchemes:
     bearerAuth:

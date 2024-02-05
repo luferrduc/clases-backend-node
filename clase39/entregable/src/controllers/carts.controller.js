@@ -23,7 +23,7 @@ export const getCart = async (req, res) => {
 export const createCart = async (req, res) => {
 	try {
 		const cart = await createCartServices();
-		return res.sendSuccess(cart);
+		return res.sendSuccessNewResource(cart);
 	} catch (error) {
 		return res.sendServerError(error.message);
 	}

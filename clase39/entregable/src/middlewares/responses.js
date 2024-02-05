@@ -6,7 +6,7 @@ export const generateCustomResponse = (req, res, next) => {
     return res.status(200).json({ status: "success", payload: data });
   };
   res.sendSuccessNewResource = (data) => {
-    return res.status(201).json({ status: "success", ...data });
+    return res.status(201).json({ status: "success", payload: data });
   };
   res.sendClientError = (error) => {
     return res.status(400).json({ status: "error", message: error });
