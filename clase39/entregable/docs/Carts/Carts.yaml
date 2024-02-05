@@ -41,6 +41,21 @@ paths:
                     example: success
                   payload:                 
                     $ref: '#components/schemas/Cart'   
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"
         "404":
           description: Cart not found
           content:
@@ -84,6 +99,21 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/Cart'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"                
     delete:
       summary: Este servicio elimina un carrito de compras a partir de su uuid (identificador único autogenerado)
       tags: 
@@ -100,6 +130,21 @@ paths:
       responses:
         "200":
           description: Cart deleted succesfully
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"          
         "404":
           description: Cart not found, incorrect id
         "500":
@@ -131,7 +176,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/Cart'   
+                $ref: '#components/schemas/Cart'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"                
     put:
       summary: Este servicio obtiene un carrito a partir de su uuid (identificador único autogenerado) 
       tags:
@@ -152,6 +212,21 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/Cart'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"                
         "404":
           description: No auth token provided
     delete:
@@ -170,6 +245,21 @@ paths:
       responses:
         "200":
           description: Cart deleted succesfully
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"          
         "404":
           description: Cart not found, incorrect id
         "500":
@@ -182,6 +272,32 @@ paths:
         - Carts
       security:
         - bearerAuth: []     
+      responses:
+        "200":
+          description: Cart deleted succesfully
+        "400":
+          description: Client Error
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"
+        "404":
+          description: Resource not found
+        "422":
+          description: Unproccesable Entity
+        "500":
+          description: Server Error
 # ----------------------------------------
 components:
   schemas:
@@ -208,8 +324,7 @@ components:
           default: "[]"     
       example:
         _id: ObjectId('asdsadA8-nyhaYvb7-Jgdjsad9-jajhsd')
-        products: [
-        ]
+        products: [{product: ObjectId('653c386cd064ad5e27ae5778'), quantity: 2}, {product: ObjectId('653c3881d064ad5e27ae5781'), quantity: 5}]
   requestBodies:
     updateCart:
       type: object

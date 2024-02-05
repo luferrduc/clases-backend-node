@@ -159,7 +159,7 @@ components:
         - stock
         - status
       example:
-        _id: ObjectId('45')
+        _id: ObjectId('653c386cd064ad5e27ae5778')
         title: Asus Rog Strix 32Gb Ram, GeForce 4090 GTX
         description: Best Notebook Gamer to play all games in store
         price: 1120000
@@ -170,6 +170,55 @@ components:
         owner: coderuser@gmail.com
   requestBodies:
     updateProduct:
+      type: Object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description:  Pequeña descripción del producto
+        price:
+          type: number
+          format: float
+          # exclusiveMinimum: false
+          # minimum: 0
+          description: Precio unitario del producto
+        thumbnail:
+          type: array
+          items:
+            type: string
+          description: Arreglo de urls de imagenes del producto
+          default: []
+        code:
+          type: string
+          description: Código único del producto
+        stock:
+          type: integer
+          format: int64
+          description: Cantidad disponible del producto
+        status:
+          type: boolean
+          description:
+        owner:
+          type: string
+          description: Correo electrónico de quien creó el producto en el software
+      required:
+        - title
+        - price
+        - code
+        - stock
+        - status
+      example:
+        _id: ObjectId('45')
+        title: Asus Rog Strix 32Gb Ram, GeForce 4090 GTX
+        description: Best Notebook Gamer to play all games in store
+        price: 1120000
+        code: notebook-002
+        stock: 5
+        status: true
+        owner: coderuser55575@gmail.com             
+    createProduct:
       type: Object
       properties:
         title:
@@ -209,7 +258,7 @@ components:
         - stock
         - status
       example:
-        _id: ObjectId('45')
+        _id: ObjectId('653c386cd064ad5e27ae5778')
         title: Asus Rog Strix 32Gb Ram, GeForce 4090 GTX
         description: Best Notebook Gamer to play all games in store
         price: 1120000
@@ -217,8 +266,7 @@ components:
         code: notebook-002
         stock: 5
         status: true
-        owner: coderuser55575@gmail.com             
-
+        owner: coderuser55575@gmail.com                
   securitySchemes:
     bearerAuth:
       type: http
