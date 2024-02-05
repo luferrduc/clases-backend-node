@@ -4,6 +4,7 @@ info:
   title: "asd"
   version: "1" 
 paths:
+# ----------------------------------------
   /api/products:
     get:
       summary: "En este servicio se obtienen todos los productos"
@@ -26,6 +27,13 @@ paths:
           description: No auth token provided
         "500":
           description: No auth token provided
+    post:
+      summary: En este servicio se permite crear un producto dentro de la base de datos
+      tags:
+        - Products
+      security:
+        - bearerAuth: []      
+# ----------------------------------------
   /api/products/{pid}:
     get:
       summary: Este servicio obtiene un producto a partir de su uuid (identificador único autogenerado) 
@@ -75,6 +83,37 @@ paths:
             application/json:
               schema:
                 $ref: '#components/schemas/Product'
+    delete:
+   
+   
+      summary: Este servicio elimina un producto a partir de su uuid (identificador único autogenerado)
+      tags: 
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto a eliminar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Product deleted succesfully
+        "404":
+          description: Product not found, incorrect id
+        "500":
+          description: Server error
+# ----------------------------------------
+  /api/products/mockingproducts:
+    get:
+      summary: En este servicio se obtiene un arreglo de prodcutos de prueba (mocking)
+      tags:
+        - Products
+      security:
+        - bearerAuth: []      
+# ----------------------------------------
 components:
   schemas:
     Product:
