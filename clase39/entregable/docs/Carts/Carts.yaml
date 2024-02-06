@@ -240,7 +240,7 @@ paths:
                   status:
                     type: string                  
                     description: Mensaje del tipo de estatus
-                    example: error
+                    example: success
                   payload:
                     $ref: '#components/requestBodies/deleteProducts'
         "401":
@@ -463,7 +463,7 @@ paths:
                   status:
                     type: string                  
                     description: Mensaje del tipo de estatus
-                    example: error
+                    example: success
                   payload:
                     $ref: '#components/requestBodies/updateCart'          
         "401":
@@ -531,9 +531,15 @@ paths:
           description: Cart purchased succesfully
           content:
             application/json:
-              schema:
-                $ref: '#components/requestBodies/purchaseTicket'
-
+              schema:   
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: success
+                  payload:
+                    $ref: '#components/requestBodies/purchaseTicket'                
         "400":
           description: Client Error
           content:

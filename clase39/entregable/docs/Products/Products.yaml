@@ -17,10 +17,17 @@ paths:
           description: Los productos se han obtenido satisfactoriamente de la base de datos
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#components/schemas/Product'
+              schema:   
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#components/schemas/Product' 
         "401":
           description: Unauthorized request
           content:
@@ -56,7 +63,57 @@ paths:
       tags:
         - Products
       security:
-        - bearerAuth: []      
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#components/schemas/Product'        
+      responses:
+        "200":
+          description: Los productos se han obtenido satisfactoriamente de la base de datos
+          content:
+            application/json:
+              schema:   
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: success
+                  payload:
+                    $ref: '#components/schemas/Product'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"  
+        "500":
+          description: Server error     
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Server error           
 # ----------------------------------------
   /api/products/{pid}:
     get:
@@ -77,8 +134,15 @@ paths:
           description: Se obtiene exitosamente el producto
           content:
             application/json:
-              schema:
-                $ref: '#components/schemas/Product'
+              schema:   
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: success
+                  payload:
+                    $ref: '#components/schemas/Product'
         "401":
           description: Unauthorized request
           content:
@@ -148,8 +212,15 @@ paths:
           description: Se actualiza satisfactoriamente el prodcuto
           content:
             application/json:
-              schema:
-                $ref: '#components/schemas/Product'
+              schema:   
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: success
+                  payload:
+                    $ref: '#components/schemas/Product'
         "401":
           description: Unauthorized request
           content:
