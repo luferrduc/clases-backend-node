@@ -8,7 +8,7 @@ import {
 	getCartByUser,
 	passwordChange,
 	changeRoleUser
-} from "../controllers/sessions.controller.js";
+} from "../controllers/users.controller.js";
 
 const router = Router();
 

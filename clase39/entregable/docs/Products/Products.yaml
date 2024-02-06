@@ -22,11 +22,35 @@ paths:
                 items:
                   $ref: '#components/schemas/Product'
         "401":
-          description: No auth token provided
-        "404":
-          description: No auth token provided
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"  
         "500":
-          description: No auth token provided
+          description: Server error     
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Server error   
     post:
       summary: En este servicio se permite crear un producto dentro de la base de datos
       tags:
@@ -50,13 +74,56 @@ paths:
             $type: string
       responses:
         "200":
-          description: E
+          description: Se obtiene exitosamente el producto
           content:
             application/json:
               schema:
                 $ref: '#components/schemas/Product'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"                  
         "404":
-          description: No auth token provided
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: product not found
+        "500":
+          description: Server error     
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Server error                              
     put:
       summary: Este servicio obtiene un producto a partir de su uuid (identificador único autogenerado) 
       tags:
@@ -78,14 +145,57 @@ paths:
               $ref: '#components/requestBodies/updateProduct'
       responses:
         "200":
-          description: E
+          description: Se actualiza satisfactoriamente el prodcuto
           content:
             application/json:
               schema:
                 $ref: '#components/schemas/Product'
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"
+        "404":
+          description: Product not found, incorrect id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Product not found    
+        "500":
+          description: Server error     
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Server error                                                   
     delete:
-   
-   
       summary: Este servicio elimina un producto a partir de su uuid (identificador único autogenerado)
       tags: 
         - Products
@@ -101,10 +211,51 @@ paths:
       responses:
         "200":
           description: Product deleted succesfully
+        "401":
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string                  
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  payload:  
+                    type: string              
+                    description: Mensaje para el tipo de error
+                    example: "Error: no auth token"            
         "404":
-          description: Product not found, incorrect id
+          description: Producto no encontrado, id incorrecto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Product not found             
         "500":
-          description: Server error
+          description: Server error     
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Mensaje del tipo de estatus
+                    example: error
+                  message:
+                    type: string
+                    description: Mensaje para el tipo del error
+                    example: Server error   
 # ----------------------------------------
   /api/products/mockingproducts:
     get:

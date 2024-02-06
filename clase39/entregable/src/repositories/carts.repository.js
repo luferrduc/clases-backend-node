@@ -25,7 +25,7 @@ export default class CartsRepository {
 		return result;
 	};
 
-	updateProducts = async (cid, pid, quantity) => {
+	updateQuantityProduct = async (cid, pid, quantity) => {
 		const result = await this.dao.updateQuantityProduct(cid, pid, quantity);
 		return result;
 	};

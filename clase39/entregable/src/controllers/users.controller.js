@@ -3,9 +3,6 @@ import { updatePassword as updatePasswordServices} from "../services/sessions.se
 import { changeRoleUser as changeRoleUserServices } from "../services/sessions.services.js"
 
 
-
-
-
 export const getCartByUser = async (req, res) => {
 	try {
 		const { cart: userCart } = req.user;
