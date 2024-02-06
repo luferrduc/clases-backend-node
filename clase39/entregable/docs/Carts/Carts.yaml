@@ -14,7 +14,7 @@ paths:
         - bearerAuth: []
       responses:
         "201":
-          description: Cart
+          description: Cart fue creado exitosamente
           content:
             application/json:
               schema:
@@ -166,7 +166,7 @@ paths:
               $ref: '#components/requestBodies/updateProduct'
       responses:
         "200":
-          description: E
+          description: El carrito fue actualizado correctamente
           content:
             application/json:
               schema:
