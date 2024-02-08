@@ -17,3 +17,62 @@ node_modules
 
 pnpm-lock.yaml
 package-lock.json
+
+clase42/primer-proyecto-nest/dist
+
+# compiled output
+clase42/primer-proyecto-nest//dist
+clase42/primer-proyecto-nest//node_modules
+clase42/primer-proyecto-nest//build
+
+# Logs
+clase42/primer-proyecto-nest/logs
+clase42/primer-proyecto-nest/*.log
+clase42/primer-proyecto-nest/npm-debug.log*
+clase42/primer-proyecto-nest/pnpm-debug.log*
+clase42/primer-proyecto-nest/yarn-debug.log*
+clase42/primer-proyecto-nest/yarn-error.log*
+clase42/primer-proyecto-nest/lerna-debug.log*
+
+# OS
+clase42/primer-proyecto-nest/.DS_Store
+
+# Tests
+clase42/primer-proyecto-nest/coverage
+clase42/primer-proyecto-nest/.nyc_output
+
+# IDEs and editors
+clase42/primer-proyecto-nest/.idea
+clase42/primer-proyecto-nest/.project
+clase42/primer-proyecto-nest/.classpath
+clase42/primer-proyecto-nest/.c9/
+clase42/primer-proyecto-nest/*.launch
+clase42/primer-proyecto-nest/.settings/
+clase42/primer-proyecto-nest/*.sublime-workspace
+
+# IDE - VSCode
+clase42/primer-proyecto-nest/.vscode/*
+clase42/primer-proyecto-nest/!.vscode/settings.json
+clase42/primer-proyecto-nest/!.vscode/tasks.json
+clase42/primer-proyecto-nest/!.vscode/launch.json
+clase42/primer-proyecto-nest/!.vscode/extensions.json
+
+# dotenv environment variable files
+clase42/primer-proyecto-nest/.env
+clase42/primer-proyecto-nest/.env.development.local
+clase42/primer-proyecto-nest/.env.test.local
+clase42/primer-proyecto-nest/.env.production.local
+clase42/primer-proyecto-nest/.env.local
+
+# temp directory
+clase42/primer-proyecto-nest/.temp
+clase42/primer-proyecto-nest/.tmp
+
+# Runtime data
+clase42/primer-proyecto-nest/pids
+clase42/primer-proyecto-nest/*.pid
+clase42/primer-proyecto-nest/*.seed
+clase42/primer-proyecto-nest/*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+clase42/primer-proyecto-nest/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
