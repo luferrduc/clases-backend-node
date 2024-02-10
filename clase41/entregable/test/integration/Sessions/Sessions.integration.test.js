@@ -1,12 +1,75 @@
-import supertest from "supertest"
-import { expect } from "chai"
+import supertest from "supertest";
+import { expect } from "chai";
+import mongoose from "mongoose";
+import configs from "../../../src/config.js";
 
-import configs from "../../../src/config.js"
+const PORT = configs.port;
+const requester = supertest(`http://localhost:${PORT}`);
 
-const requester = supertest(`http://localhost:${PORT}`)
+describe("Pruebas de integración del módulo de sessions", () => {
+	after(async () => {
+		try {
+			await mongoose.connection.collections?.users?.drop();
+		} catch (error) {
+			console.log(error.message);
+		}
+	});
 
-const PORT = configs.port
+	before(async () => {
+		try {
+			await mongoose.connection.collections?.users?.drop();
+		} catch (error) {
+			console.log(error.message);
+		}
+	});
 
-describe("Testing del módulo de Sessions", () => {
+	it("Debemos registar un usuario correctamente", async () => {
+		const userMock = {
+			first_name: "Luciano",
+			last_name: "Ferrando",
+			email: "lferrando@gmail.com",
+			age: 29,
+			password: "123456"
+		};
+		const { statusCode, _body } = await requester
+			.post("/api/sessions/register")
+			.send(userMock);
+		console.log(_body.payload);
+		expect(statusCode).to.be.eql(201);
+		expect(_body.payload).to.have.property("first_name");
+		expect(_body.payload).to.have.property("last_name");
+		expect(_body.payload).to.have.property("email");
+		expect(_body.payload).to.have.property("age");
 
-})
+		expect(_body.payload.first_name).to.be.eql("Luciano");
+		expect(_body.payload.last_name).to.be.eql("Ferrando");
+		expect(_body.payload.email).to.be.eql("lferrando@gmail.com");
+	});
+
+	it("Debemos loguear al usuario de forma exitosa y retornar el token", async () => {
+		const credentials = {
+			email: "lferrando@gmail.com",
+			password: "123456"
+		};
+		const loginResult = await requester
+			.post("/api/sessions/login")
+			.send(credentials);
+		// console.log(loginResult)
+		const { statusCode, _body } = loginResult;
+
+		expect(statusCode).to.be.eql(200);
+
+		const cookieResult = loginResult.headers["set-cookie"][0];
+		console.log(cookieResult);
+		// expect(cookieResult).to.be.ok;
+
+		// const cookieResultSplit = cookieResult.split("=");
+		// cookie = {
+		// 	name: cookieResultSplit[0],
+		// 	value: cookieResultSplit[1]
+		// };
+
+		// expect(cookie.name).to.be.ok.and.to.be.eql("coderCookieToken");
+		// expect(cookie.value).to.be.ok;
+	});
+});
