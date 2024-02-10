@@ -69,16 +69,16 @@ export const register = async (req, res) => {
 			req.logger.error(resultUser.error)
 			return res.sendUnproccesableEntity(resultUser.error);
 		}
-
-
 		const user = resultUser.data;
-
 		const existsUser = await loginServices(user.email);
-		if (existsUser) return res.sendClientError("user already exists");
-
+		if (existsUser) {
+			req.logger.error("user already exists")
+			return res.sendClientError("user already exists");
+		}
 		const registeredUser = await registerServices(user);
 		return res.sendSuccessNewResource(registeredUser);
 	} catch (error) {
+		req.logger.fatal(error.message)
 		return res.sendServerError(error.message);
 	}
 };

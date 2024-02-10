@@ -4,6 +4,7 @@ const persistence = configs.persistence
 
 
 let Products, Carts, Messages, Users, Tickets
+let conn
 
 switch(persistence) {
   case 'MONGO':
@@ -12,7 +13,8 @@ switch(persistence) {
     const mongoose = await import('mongoose')
     const MongoStore = await import("connect-mongo")
     try {
-      await mongoose.connect(configs.mongoUrl)    
+      conn = await mongoose.connect(configs.mongoUrl)    
+      // console.log(conn.connection)
       const { default: ProductsMongo } = await import('./dbManagers/products.manager.js')
       const { default: CartsMongo } = await import('./dbManagers/carts.manager.js')
       const { default: UsersMongo } = await import('./dbManagers/users.manager.js')
@@ -50,5 +52,6 @@ export {
   Carts,
   Users,
   Messages,
-  Tickets
+  Tickets,
+  conn
 }

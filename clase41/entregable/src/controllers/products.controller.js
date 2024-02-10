@@ -92,7 +92,7 @@ export const createProduct = async (req, res) => {
 		const newProduct = await createProductServices(result.data, user);
 		const { products: productsEmit } = await getProductsServices(options);
 		io.emit("refreshProducts", productsEmit);
-		return res.sendSuccess(newProduct);
+		return res.sendSuccessNewResource(newProduct);
 	} catch (error) {
 		req.logger.error(`${error.message}`);
 		return res.sendServerError(error.message);

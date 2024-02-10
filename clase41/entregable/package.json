@@ -8,7 +8,7 @@
     "dev": "node --watch src/app.js --mode=DEV",
     "start": "node src/app.js --mode=PROD",
     "dev:test": "node --watch src/app.js --mode=TEST",
-    "test": "mocha test/integration/*/*.test.js"
+    "test": "mocha test/integration/*/*.test.js --mode=TEST"
   },
   "keywords": [],
   "author": "Luciano Ferrando",
