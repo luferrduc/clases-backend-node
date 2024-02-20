@@ -1,0 +1,54 @@
+paths:
+  /api/students:
+    get:
+      summary: Servicio que sirve para obtener el listado de estudiantes
+      tags:
+      - Students
+      responses:
+        "200":
+          description: El servicio obtiene el listado de todos los estudiantes de forma correcta
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Student'
+
+components: 
+  schemas:
+    Student:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por mongodb
+        first_name:
+          type: String
+          description: Nombre del estudiante
+        last_name:
+          type: String
+          description: Apellido del estudiante        
+        email:
+          type: String
+          description: Email del estudiante      
+        dni:
+          type: Number
+          description: DNI del estudiante
+        birth_date:
+          type: Date
+          description: Fecha de nacimiento del estudiante
+        gender:
+          type: String
+          description: Género del estudiante
+        courses:
+          type: Array
+          description: Cursos que tiene asignado el estudiante
+      example:
+        _id: ObjectId('ASdasdhj72183-123871na')
+        first_name: Coder
+        last_name: House
+        email: ch@coder.com
+        dni: 45612368
+        birth_date: 2000-01-01
+        gender: F
+        courses: []
