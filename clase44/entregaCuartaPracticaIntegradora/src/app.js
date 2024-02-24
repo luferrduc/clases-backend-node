@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
+
 import { __dirname } from "./utils.js";
 import configs from "./config.js";
 import { initializePassport } from "./config/passport.config.js";
@@ -17,6 +18,7 @@ import SessionsRouter from "./routes/sessions.routes.js";
 import ProductsRouter from "./routes/products.routes.js";
 import CartsRouter from "./routes/carts.routes.js";
 import ViewsRouter from "./routes/views.routes.js";
+import UsersRouter from  "./routes/users.routes.js"
 
 // Manager de los mensajes
 import MessageManager from "./dao/dbManagers/messages.manager.js";
@@ -57,6 +59,7 @@ app.use(passport.session());
 app.use("/api/products", ProductsRouter);
 app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter);
+app.use("/api/users", UsersRouter)
 app.get("/api/loggerTest", (req, res) => {
 	// Prueba de custom levels logger
 	req.logger.fatal("Prueba para logger fatal");

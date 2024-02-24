@@ -2,8 +2,8 @@ import winston from "winston";
 import configs from "../config.js";
 // Ejercicio multientorno
 const ENVIRONMENT = configs.environment;
-console.log(ENVIRONMENT);
-let logger;
+
+export let logger;
 
 const customLevelOptions = {
 	levels: {
@@ -82,3 +82,4 @@ export const addLogger = (req, res, next) => {
 	req.logger.info(`${req.method} en ${req.url} - ${new Date().toISOString()}`);
 	next();
 };
+

@@ -20,6 +20,11 @@ export default class Users {
 		return exists;
 	};
 
+	signInSignOut = async (email) => {
+		const lastConnection = (new Date()).toLocaleString()
+		const result = await usersModel.findOneAndUpdate({email}, { last_connection: lastConnection })
+		return result
+	}
 	create = async ({ first_name, last_name, email, age, password }) => {
 		const result = await usersModel.create({
 			first_name,

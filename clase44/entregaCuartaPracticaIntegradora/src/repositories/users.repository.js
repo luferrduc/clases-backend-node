@@ -7,6 +7,7 @@ export default class UsersRepository {
 
 	login = async (email) => {
 		const user = await this.dao.getByEmail(email);
+		if(user) this.dao.signInSignOut(email)
 		return user;
 	};
 
@@ -33,6 +34,7 @@ export default class UsersRepository {
 
 	logout = async (email) => {
 		const result = await this.dao.deleteCartFromUser(email);
+		if(result) this.dao.signInSignOut(email)
 		return result;
 	};
 
