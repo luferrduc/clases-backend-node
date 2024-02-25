@@ -20,6 +20,13 @@ export class PasswordIsNotValidError extends Error {
 	}
 }
 
+export class RequiredDocumentsNotFound extends Error {
+	constructor(message) {
+		super(message);
+		this.name = this.constructor.name;
+	}
+}
+
 export class ResourceNotFoundError extends Error {
 	constructor(message) {
 		super(message);
