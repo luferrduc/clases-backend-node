@@ -17,6 +17,13 @@ router
 			accessRolesEnum.PREMIUM,
 			accessRolesEnum.ADMIN
 		]),
+		uploader.fields([
+			{ name: "perfil" },
+			{ name: "identificacion" },
+			{ name: "products" },
+			{ name: "domicilio" },
+			{ name: "cuenta" }
+		]),
 		generateCustomResponse
 	)
 	.put(
@@ -31,5 +38,4 @@ router
 		changeRoleUser
 	);
 
-
-	export default router
+export default router;

@@ -32,3 +32,8 @@ export const changeRoleUser = async (uid) => {
   return result
 
 }
+
+
+export const uploadDocuments = async () => {
+  
+}

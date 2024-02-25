@@ -24,7 +24,7 @@ const userSchema = z.object({
   documents: z.array(z.object({
     name: z.string(),
     reference: z.string()
-  }))
+  })).default([])
 
 })
 

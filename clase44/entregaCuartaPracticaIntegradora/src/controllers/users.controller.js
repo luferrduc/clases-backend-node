@@ -1,5 +1,6 @@
-import { changeRoleUser as changeRoleUserServices } from "../services/users.services.js";
 import { RequiredDocumentsNotFound } from "../utils/custom.exceptions.js";
+import { changeRoleUser as changeRoleUserServices } from "../services/users.services.js";
+import {uploadDocuments as uploadDocumentsServices } from "../services/users.services.js"
 
 export const changeRoleUser = async (req, res) => {
 	try {
@@ -21,3 +22,13 @@ export const changeRoleUser = async (req, res) => {
 		}
 	}
 };
+
+export const uploadDocuments = async (req, res) => {
+	try {
+		const files = req.file
+		const result = uploadDocumentsServices(files)
+	} catch (error) {
+		req.logger.fatal(`${error.message}`);
+		return res.sendServerError(error.message);
+	}
+}
