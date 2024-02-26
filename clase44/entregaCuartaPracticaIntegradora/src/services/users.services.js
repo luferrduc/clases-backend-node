@@ -33,6 +33,12 @@ export const changeRoleUser = async (uid) => {
 
 }
 
+export const getUserById = async (uid) => {
+  const user = userRepository.getById(uid)
+  if(!user) throw new UserNotFoundError("User not found, incorrect id")
+  return user
+}
+
 
 export const uploadDocuments = async () => {
   
