@@ -1,8 +1,9 @@
 import Stripe from "stripe"
+import configs from "../config.js"
 
 export default class PaymentService {
   constructor(){
-    this.stripe = new Stripe('sk_test_51OoEDnEsDbGNQUmEDb8urwlGtvBe4QDSWzrjsO8kTLALJYFGgzbCqQt7odqjijBY4hiIDll1kBNRGrwUUgD7d8Ww00kTMHqlAq')
+    this.stripe = new Stripe(configs.stripePrivateKey)
   }
 
   createPaymentIntent = async (data) => {
