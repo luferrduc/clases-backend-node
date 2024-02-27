@@ -14,10 +14,11 @@ router
 		"/:uid",
 		passportCall(passportStrategiesEnum.NOTHING),
 		handlePolicies([
-			accessRolesEnum.USER,
+			accessRolesEnum.PUBLIC,
 			accessRolesEnum.PREMIUM,
 			accessRolesEnum.ADMIN
 		]),
+		generateCustomResponse,
 		getUserById
 	)
 	.post(

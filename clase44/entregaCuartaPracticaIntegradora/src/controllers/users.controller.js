@@ -26,8 +26,8 @@ export const changeRoleUser = async (req, res) => {
 export const getUserById = async (req, res) => {
 	try {
 		const { uid } = req.params
-		const user = getUserByIdService(uid)
-		return req.sendSuccess(user)
+		const user = await getUserByIdService(uid)
+		return res.sendSuccess(user)
 	} catch (error) {
 		req.logger.fatal(`${error.message}`)
 		return res.sendServerError(error.message)

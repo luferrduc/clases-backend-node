@@ -33,8 +33,7 @@ const usersSchema = new mongoose.Schema({
 		default: "user"
 	},
 	last_connection: {
-		type: String,
-		default: new Date().toLocaleString()
+		type: String
 	},
 	documents: {
 		type: [
