@@ -3,7 +3,7 @@ import { handlePolicies } from "../middlewares/auth.js"
 import { passportCall } from "../config/passport.config.js"
 import { generateCustomResponse } from "../middlewares/responses.js"
 import { accessRolesEnum, passportStrategiesEnum } from "../config/enums.js"
-import { changeRoleUser } from "../controllers/users.controller.js"
+import { changeRoleUser, uploadDocuments } from "../controllers/users.controller.js"
 import { getUserById } from "../controllers/users.controller.js"
 import uploader from "../middlewares/uploader.js"
 
@@ -32,11 +32,12 @@ router
 		uploader.fields([
 			{ name: "perfil" },
 			{ name: "identificacion" },
-			{ name: "products" },
+			{ name: "productos" },
 			{ name: "domicilio" },
 			{ name: "cuenta" }
 		]),
-		generateCustomResponse
+		generateCustomResponse,
+		uploadDocuments
 	)
 	.put(
 		"/premium/:uid",

@@ -4,7 +4,7 @@ import { __dirname } from "../utils.js"
 // TODO: Crear un middleware con multer que permita guardar en diferentes carpetas los diferentes archivos
 // TODO: Modificar la función para que dependiendo del archivo lo guarde en una carpeta u otra
 
-let folder = `${__dirname}/../public/assets`
+let folder = `${__dirname}/public/assets`
 
 const storage = multer.diskStorage({
 	/*
@@ -15,11 +15,12 @@ const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		//* Identificar cuando es un tipo de archivo perfil, producto o documento
 
+		// console.log(file)
 		switch (file.fieldname) {
-			case "profile":
+			case "perfil":
 				cb(null, `${folder}/profiles`)
 				break
-			case "products":
+			case "productos":
 				cb(null, `${folder}/products`)
 				break
 			case "identificacion":
@@ -34,10 +35,9 @@ const storage = multer.diskStorage({
 			default:
 				break
 		}
-
-		destinations[file.fieldname]
 	},
 	filename: function (req, file, cb) {
+		// console.log(req.user)
 		cb(null, `${Date.now()}-${file.originalname}`)
 	}
 })

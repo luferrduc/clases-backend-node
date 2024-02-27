@@ -47,4 +47,8 @@ export default class UsersRepository {
 		const result = await this.dao.changeRole(uid, role)
 		return result
 	}
+
+	updateDocuments = async (user, files) => {
+		
+	}
 }

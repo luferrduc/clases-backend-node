@@ -36,12 +36,12 @@ export const getUserById = async (req, res) => {
 
 export const uploadDocuments = async (req, res) => {
 	try {
-		const files = req.file
+		const files = req.files
 		const { uid } = req.params
-		const user = getUserByIdService(uid)
-
-		return res.sendSuccess(user)
-		const result = uploadDocumentsServices(files)
+		const user = await getUserByIdService(uid)
+		// console.log(user)
+		// return res.sendSuccess(user)
+		const result = await uploadDocumentsServices(user, files)
 	} catch (error) {
 		req.logger.fatal(`${error.message}`)
 		return res.sendServerError(error.message)

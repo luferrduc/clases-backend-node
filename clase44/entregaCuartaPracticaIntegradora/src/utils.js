@@ -7,6 +7,7 @@ import configs from "./config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
+export const __mainDirname = join(__dirname, '..', '..')
 
 export const productsFilePath = join(__dirname, "./files/productos.json");
 export const cartsFilePath = join(__dirname, "./files/carts.json");
