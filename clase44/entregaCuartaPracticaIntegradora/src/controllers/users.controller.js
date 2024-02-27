@@ -29,8 +29,13 @@ export const getUserById = async (req, res) => {
 		const user = await getUserByIdService(uid)
 		return res.sendSuccess(user)
 	} catch (error) {
-		req.logger.fatal(`${error.message}`)
-		return res.sendServerError(error.message)
+		if (error instanceof UserNotFoundError) {
+			req.logger.error(`${error.message}`)
+			return res.sendNotFoundError(error.message)
+		} else {
+			req.logger.fatal(`${error.message}`)
+			return res.sendServerError(error.message)
+		}
 	}
 }
 
@@ -39,11 +44,16 @@ export const uploadDocuments = async (req, res) => {
 		const files = req.files
 		const { uid } = req.params
 		const user = await getUserByIdService(uid)
-		// console.log(user)
-		// return res.sendSuccess(user)
+
 		const result = await uploadDocumentsServices(user, files)
+		return res.sendSuccess(result)
 	} catch (error) {
-		req.logger.fatal(`${error.message}`)
-		return res.sendServerError(error.message)
+		if (error instanceof UserNotFoundError) {
+			req.logger.error(`${error.message}`)
+			return res.sendNotFoundError(error.message)
+		} else {
+			req.logger.fatal(`${error.message}`)
+			return res.sendServerError(error.message)
+		}
 	}
 }

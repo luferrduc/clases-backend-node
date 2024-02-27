@@ -48,7 +48,8 @@ export default class UsersRepository {
 		return result
 	}
 
-	updateDocuments = async (user, files) => {
-		
+	uploadDocuments = async (user, documents) => {
+		const result = await this.dao.uploadDocuments(user, documents)
+		return result
 	}
 }

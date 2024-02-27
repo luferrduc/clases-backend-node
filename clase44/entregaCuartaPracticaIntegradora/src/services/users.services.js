@@ -49,9 +49,8 @@ export const uploadDocuments = async (user, files) => {
 	let documents = []
 	const fileArray = Object.entries(files)
 	fileArray.map(([name, data]) => {
-		console.log({ name, reference: data[0].path })
 		documents.push({ name, reference: data[0].path })
 	})
-	const result = await userRepository.updateDocuments(user, documents)
+	const result = await userRepository.uploadDocuments(user, documents)
 	return result
 }
