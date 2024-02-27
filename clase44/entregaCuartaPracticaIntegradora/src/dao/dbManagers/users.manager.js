@@ -73,36 +73,29 @@ export default class Users {
 
 	uploadDocuments = async (user, documents) => {
 		const uid = user._id
-		const filter = { _id: uid }
-
-		const update = {
-			$addToSet: {
-				// Agrega elementos al conjunto sin duplicados
-				documents: { $each: documents } // Agrega cada documento en el array
-			}
-		}
-		// Iterar sobre los documentos para actualizar las referencias de los documentos existentes
 		for (const doc of documents) {
-			// Buscar si el documento ya existe en el arreglo de 'documents'
+			// Se verifica si el documento ya existe mediante el nombre del documento
 			const existingDoc = await usersModel.findOne({
 				_id: uid,
 				"documents.name": doc.name
 			})
 
-			// Si el documento ya existe, actualizar su referencia
+			// Si el documento ya existe, solo se actualiza su referencia
 			if (existingDoc) {
 				await usersModel.updateOne(
 					{ _id: uid, "documents.name": doc.name },
 					{ $set: { "documents.$.reference": doc.reference } }
 				)
+			} else {
+				// Si el documento no existe, se agrega al array
+				await usersModel.updateOne(
+					{ _id: uid },
+					{ $addToSet: { documents: doc } }
+				)
 			}
 		}
-		// Ejecutar la actualización para agregar nuevos documentos y actualizar referencias
-		const result = await usersModel.findOneAndUpdate(filter, update, {
-			upsert: true,
-			new: true
-		})
-		const updatedUser = await usersModel.findById(uid)
-		return updatedUser
+
+		const userUpdated = await usersModel.findById(uid).lean()
+		return userUpdated
 	}
 }

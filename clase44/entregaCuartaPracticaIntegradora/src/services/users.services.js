@@ -1,6 +1,6 @@
 import { Users as UsersDao } from "../dao/factory.js"
 import UsersRepository from "../repositories/users.repository.js"
-import { RequiredDocumentsNotFound } from "../utils/custom.exceptions.js"
+import { RequiredDocumentsNotFound, UserNotFoundError } from "../utils/custom.exceptions.js"
 
 const usersDao = new UsersDao()
 const userRepository = new UsersRepository(usersDao)
@@ -23,9 +23,8 @@ export const changeRoleUser = async (uid) => {
 
 	if (user.role === "user") {
 		if (
-			!user.documents.every((document) =>
-				requiredDocuments.includes(document.name)
-			)
+			!requiredDocuments.every(document =>
+				user.documents.some(userDocument => userDocument.name === document))
 		) {
 			throw new RequiredDocumentsNotFound(
 				"No se tienen todos los documentos necesarios para cambiar a premium"

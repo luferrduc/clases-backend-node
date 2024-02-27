@@ -1,4 +1,4 @@
-import { RequiredDocumentsNotFound } from "../utils/custom.exceptions.js"
+import { RequiredDocumentsNotFound, UserNotFoundError } from "../utils/custom.exceptions.js"
 import { changeRoleUser as changeRoleUserServices } from "../services/users.services.js"
 import { uploadDocuments as uploadDocumentsServices } from "../services/users.services.js"
 import { getUserById as getUserByIdService } from "../services/users.services.js"
