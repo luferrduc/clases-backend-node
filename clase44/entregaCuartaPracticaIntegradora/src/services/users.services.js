@@ -6,9 +6,9 @@ const usersDao = new UsersDao()
 const userRepository = new UsersRepository(usersDao)
 
 const requiredDocuments = [
-	"Identificación",
-	"Comprobante de domicilio",
-	"Comprobante de estado de cuenta"
+	"identificacion",
+	"domicilio",
+	"cuenta"
 ]
 
 export const changeRoleUser = async (uid) => {
